@@ -16,6 +16,10 @@ public class Articulos {
   private int gastos;
   private int tiempoMinutos; 
 
+    public Articulos(){
+        
+    }
+  
     public Articulos(int numArticulo, String descripcion, int precio, int gastos, int tiempoMinutos) {
         this.numArticulo = numArticulo;
         this.descripcion = descripcion;

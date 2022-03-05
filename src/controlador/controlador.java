@@ -56,4 +56,8 @@ public class controlador {
            // view.printStudentDetails (model.getName (), model.getRollNo ());
         viewCliente.printClientesDetails (modelCliente.getNombre(), modelCliente.getDomicilio(), modelCliente.getNif(), modelCliente.getEmail(), modelCliente.isPremium());
 }
+  
+  public void updateViewArticulo(){
+      viewArticulo.printArticulosDetails(modelArticulo.getNumArticulo(), modelArticulo.getDescripcion(), modelArticulo.getPrecio(), modelArticulo.getGastos(), modelArticulo.getTiempoMinutos());
+  }
 }

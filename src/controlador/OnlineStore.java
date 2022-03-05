@@ -25,9 +25,17 @@ public class OnlineStore {
     if (model instanceof Clientes){
           controller.updateViewCliente ();  
     }
-
-
-    // Update model data controller.setStudentName ( "John");
+    
+    Articulos modelArticulo = retriveArticulosFromDatabase();
+    ArticulosView viewArticulo = new ArticulosView();
+    controlador controllerArticulo = new controlador(modelArticulo, viewArticulo);
+    
+    if (modelArticulo instanceof Articulos){
+        controllerArticulo.updateViewArticulo();
+    }
+    
+    
+    //"supuesta" carga de datos en base de datos
 }
  private static Clientes retriveClienteFromDatabase() {
       Clientes cliente = new Clientes ();
@@ -37,5 +45,15 @@ public class OnlineStore {
       cliente.setEmail ( "juaito@uoc.edu");
       cliente.setPremium(true);
       return cliente;
-   }   
+   }  
+
+private static Articulos retriveArticulosFromDatabase(){
+    Articulos articulo = new Articulos();
+    articulo.setNumArticulo(01);
+    articulo.setDescripcion("Dibujo matematico loco");
+    articulo.setPrecio(100000000);
+    articulo.setGastos(3);
+    articulo.setTiempoMinutos(30);
+    return articulo;
+} 
 }
