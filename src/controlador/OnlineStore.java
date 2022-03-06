@@ -4,56 +4,152 @@
  * and open the template in the editor.
  */
 package controlador;
+
+import java.util.Scanner;
 import view.*;
 import model.*;
+
 /**
  *
  * @author sergichavez
  */
 public class OnlineStore {
 
+    Scanner sn = new Scanner(System.in);
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-
-    Clientes model = retriveClienteFromDatabase();
-    ClientesView view = new ClientesView();
-    controlador controller = new controlador(model, view);
-    
-    if (model instanceof Clientes){
-          controller.updateViewCliente ();  
+        OnlineStore prg = new OnlineStore();
+        /*
+       Llamada a inicio sin parámetros para incializar el programa
+         */
+        prg.inicio();
     }
-    
-    Articulos modelArticulo = retriveArticulosFromDatabase();
-    ArticulosView viewArticulo = new ArticulosView();
-    controlador controllerArticulo = new controlador(modelArticulo, viewArticulo);
-    
-    if (modelArticulo instanceof Articulos){
-        controllerArticulo.updateViewArticulo();
-    }
-    
-    
-    //"supuesta" carga de datos en base de datos
-}
- private static Clientes retriveClienteFromDatabase() {
-      Clientes cliente = new Clientes ();
-      cliente.setNombre ( "Robert");
-      cliente.setDomicilio ( "Calle Serrano");
-      cliente.setNif ( "222233332X");
-      cliente.setEmail ( "juaito@uoc.edu");
-      cliente.setPremium(true);
-      return cliente;
-   }  
 
-private static Articulos retriveArticulosFromDatabase(){
-    Articulos articulo = new Articulos();
-    articulo.setNumArticulo(01);
-    articulo.setDescripcion("Dibujo matematico loco");
-    articulo.setPrecio(100000000);
-    articulo.setGastos(3);
-    articulo.setTiempoMinutos(30);
-    return articulo;
-} 
+    void inicio() {
+        boolean salir = false;
+        char opcio;
+        do {
+            /*
+            llamada a la funcion texto_menu, no requiere parametros y muestra
+            las opciones al usuario
+             */
+            texto_menu();
+            /*
+            pedirOpcion(), sin parametros y pide al usuario que elija la opcion
+            del menu que quiere ejecutar
+             */
+            opcio = pedirOpcion();
+            // mostramos opcion elegida por el usuario
+            System.out.println("Opcion: " + opcio);
+            switch (opcio) {
+
+                case '1':
+                    /*
+                    funcion para entrar clientes
+                     */
+                    System.out.println("Opcion para entrar clientes");
+                    break;
+                case '2':
+                    /*
+                    funcion para entrar articulos
+                     */
+                    System.out.println("Opcion para entrar articulos");
+                    break;
+                case '3':
+                    /*
+                    funcion para entrar pedidos
+                     */
+                    System.out.println("Opcion para entrar pedidos");
+                    break;
+                case '4':
+                    /*
+                    funcion para mostrar clientes
+                     */
+                    System.out.println("Opcion para mostrar clientes\n\n");
+                    Clientes model = retriveClienteFromDatabase();
+                    ClientesView view = new ClientesView();
+                    controlador controller = new controlador(model, view);
+                    controller.updateViewCliente();
+                    break;
+                case '5':
+                    /*
+                    funcion para mostrar articulos
+                     */
+                    System.out.println("Opcion para mostrar articulos\n\n");
+                    Articulos modelArticulo = retriveArticulosFromDatabase();
+                    ArticulosView viewArticulo = new ArticulosView();
+                    controlador controllerArticulo = new controlador(modelArticulo, viewArticulo);
+                    controllerArticulo.updateViewArticulo();
+                    break;
+                case '6':
+                    /*
+                    funcion para mostrar pedidos
+                     */
+                    System.out.println("Opcion para mostrar pedidos");
+                    break;
+                case '7':
+                    /*
+                    funcion para eliminar pedidos
+                     */
+                    System.out.println("Opcion para eliminar pedidos");
+                    break;
+                case '8':
+                    salir = true;
+            }
+        } while (!salir);
+
+        //"supuesta" carga de datos en base de datos
+    }
+
+    private static Clientes retriveClienteFromDatabase() {
+        Clientes cliente = new Clientes();
+        cliente.setNombre("Robert");
+        cliente.setDomicilio("Calle Serrano");
+        cliente.setNif("222233332X");
+        cliente.setEmail("juaito@uoc.edu");
+        cliente.setPremium(true);
+        return cliente;
+    }
+
+    private static Articulos retriveArticulosFromDatabase() {
+        Articulos articulo = new Articulos();
+        articulo.setNumArticulo(01);
+        articulo.setDescripcion("Dibujo matematico loco");
+        articulo.setPrecio(100000000);
+        articulo.setGastos(3);
+        articulo.setTiempoMinutos(30);
+        return articulo;
+    }
+
+    char pedirOpcion() {
+        /* metodo para elegir la opción deseada del menu*/
+        String resp;
+        System.out.print("Elige una opción (1,2,3,4,6 o 7). Opcion 8 para salir: ");
+        resp = sn.nextLine();
+        if (resp.isEmpty()) {
+            resp = " ";
+        }
+        return resp.charAt(0);
+    }
+
+    void texto_menu() {
+        /*
+        mostramos el menu
+         */
+        System.out.println("**************************");
+        System.out.println("MENU PRINCIPAL ONLINE STORE");
+        System.out.println("**************************\n");
+        System.out.println("1. Entrada de cliente");
+        System.out.println("2. Entrada de Articulo");
+        System.out.println("3. Entrada de Pedido");
+        System.out.println("4. Mostrar Cliente");
+        System.out.println("5. Mostrar Articulo");
+        System.out.println("6. Mostrar Pedido");
+        System.out.println("7. Eliminar Pedido");
+        System.out.println("8. Salir");
+    }
 }
