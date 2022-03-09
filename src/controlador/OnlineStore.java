@@ -37,7 +37,7 @@ public class OnlineStore {
             llamada a la funcion texto_menu, no requiere parametros y muestra
             las opciones al usuario
              */
-            texto_menu();
+            MenuVieuw.texto_menu();
             /*
             pedirOpcion(), sin parametros y pide al usuario que elija la opcion
             del menu que quiere ejecutar
@@ -128,7 +128,6 @@ public class OnlineStore {
     char pedirOpcion() {
         /* metodo para elegir la opción deseada del menu*/
         String resp;
-        System.out.print("Elige una opción (1,2,3,4,6 o 7). Opcion 8 para salir: ");
         resp = sn.nextLine();
         if (resp.isEmpty()) {
             resp = " ";
@@ -136,20 +135,4 @@ public class OnlineStore {
         return resp.charAt(0);
     }
 
-    void texto_menu() {
-        /*
-        mostramos el menu
-         */
-        System.out.println("**************************");
-        System.out.println("MENU PRINCIPAL ONLINE STORE");
-        System.out.println("**************************\n");
-        System.out.println("1. Entrada de cliente");
-        System.out.println("2. Entrada de Articulo");
-        System.out.println("3. Entrada de Pedido");
-        System.out.println("4. Mostrar Cliente");
-        System.out.println("5. Mostrar Articulo");
-        System.out.println("6. Mostrar Pedido");
-        System.out.println("7. Eliminar Pedido");
-        System.out.println("8. Salir");
-    }
 }
