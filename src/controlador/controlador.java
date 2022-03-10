@@ -54,7 +54,7 @@ public class controlador {
  } 
   public void updateViewCliente () {
            // view.printStudentDetails (model.getName (), model.getRollNo ());
-        viewCliente.printClientesDetails (modelCliente.getNombre(), modelCliente.getDomicilio(), modelCliente.getNif(), modelCliente.getEmail());
+        viewCliente.printClientesDetails (modelCliente.getNombre(), modelCliente.getDomicilio(), modelCliente.getNif(), modelCliente.getEmail(),modelCliente.tipoCliente(), modelCliente.descuentoEnv(),modelCliente.calcAnual());
 }
   
   public void updateViewArticulo(){

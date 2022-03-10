@@ -56,6 +56,8 @@ public abstract class Clientes {
     public void setEmail(String email) {
         this.email = email;
     }
- 
+ public abstract String tipoCliente();
+ public abstract float calcAnual();
+ public abstract float descuentoEnv();
  
 }

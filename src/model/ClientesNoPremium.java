@@ -13,4 +13,7 @@ public class ClientesNoPremium extends Clientes {
        public ClientesNoPremium(String nombre, String domicilio, String nif, String email) {
         super(nombre, domicilio, nif, email);
     }   
+     public float descuentoEnv() { return 0;};
+     public String tipoCliente() {return "Standard";};
+     public float calcAnual(){ return 0;};
 }

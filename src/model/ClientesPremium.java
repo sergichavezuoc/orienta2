@@ -12,5 +12,8 @@ package model;
 public class ClientesPremium extends Clientes {
      public ClientesPremium(String nombre, String domicilio, String nif, String email) {
         super(nombre, domicilio, nif, email);
-    }   
+    }  
+     public float descuentoEnv() { return 20;};
+     public String tipoCliente() {return "Premium";};
+     public float calcAnual(){ return 30;};
 }
