@@ -9,7 +9,7 @@ package view;
  *
  * @author maria
  */
-public class MenuVieuw {
+public class MenuView {
     public static void texto_menu() {
         /*
         mostramos el menu

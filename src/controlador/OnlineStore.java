@@ -37,7 +37,7 @@ public class OnlineStore {
             llamada a la funcion texto_menu, no requiere parametros y muestra
             las opciones al usuario
              */
-            MenuVieuw.texto_menu();
+            MenuView.texto_menu();
             /*
             pedirOpcion(), sin parametros y pide al usuario que elija la opcion
             del menu que quiere ejecutar
