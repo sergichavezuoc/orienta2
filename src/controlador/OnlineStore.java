@@ -70,7 +70,7 @@ public class OnlineStore {
                     funcion para mostrar clientes
                      */
                     System.out.println("Opcion para mostrar clientes\n\n");
-                    Clientes model = retriveClienteFromDatabase();
+                    Clientes model = retriveClientePremiumFromDatabase();
                     ClientesView view = new ClientesView();
                     controlador controller = new controlador(model, view);
                     controller.updateViewCliente();
@@ -106,14 +106,14 @@ public class OnlineStore {
     }
 
     private static Clientes retriveClienteFromDatabase() {
-        Clientes cliente = new Clientes();
-        cliente.setNombre("Robert");
-        cliente.setDomicilio("Calle Serrano");
-        cliente.setNif("222233332X");
-        cliente.setEmail("juaito@uoc.edu");
-        cliente.setPremium(true);
+        ClientesNoPremium cliente = new ClientesNoPremium("Robert","Calle Serrano","222233332X","juaito@uoc.edu");
         return cliente;
     }
+    private static Clientes retriveClientePremiumFromDatabase() {
+        ClientesPremium cliente = new ClientesPremium("Roberto","Calle Mariano","333333332X","manolo@uoc.edu");
+        return cliente;
+    }
+
 
     private static Articulos retriveArticulosFromDatabase() {
         Articulos articulo = new Articulos();

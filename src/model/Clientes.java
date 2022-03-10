@@ -9,22 +9,20 @@ package model;
  *
  * @author sergichavez
  */
-public class Clientes {
- private String nombre;
- private String domicilio;
- private String nif;
- private String email;
- private boolean premium;
+public abstract class Clientes {
+ protected String nombre;
+ protected String domicilio;
+ protected String nif;
+ protected String email;
  public Clientes(){
      
  }
          
-    public Clientes(String nombre, String domicilio, String nif, String email, boolean premium) {
+    public Clientes(String nombre, String domicilio, String nif, String email) {
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.nif = nif;
         this.email = email;
-        this.premium = premium;
     }
 
     public String getNombre() {
@@ -57,14 +55,6 @@ public class Clientes {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean isPremium() {
-        return premium;
-    }
-
-    public void setPremium(boolean premium) {
-        this.premium = premium;
     }
  
  
