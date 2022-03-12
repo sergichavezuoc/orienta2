@@ -3,18 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/sergichavez/onlineStore/src/model/Pedidos.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/model/Clientes.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/view/NuevaPedidosView.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/model/Articulos.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/view/PedidosView.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/controlador/OnlineStore.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/view/EliminarPedidosView.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/view/NuevaArticulosView.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/view/NuevaClientesView.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/controlador/controlador.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/view/ArticulosView.java</file>
-            <file>file:/Users/sergichavez/onlineStore/src/view/ClientesView.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/controlador/OnlineStore.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/view/ArticulosView.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/view/MenuView.java</file>
         </group>
     </open-files>
 </project-private>
