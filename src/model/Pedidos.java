@@ -6,6 +6,7 @@
 package model;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
  *
@@ -75,5 +76,6 @@ private Time hora;
     public void setHora(Time hora) {
         this.hora = hora;
     }
-
+    
 }
+

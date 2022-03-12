@@ -59,9 +59,4 @@ public abstract class Clientes {
  public abstract String tipoCliente();
  public abstract float calcAnual();
  public abstract float descuentoEnv();
- 
- @Override
-    public String toString() {
-        return "Cliente:\n\t\t" + "nombre = " + nombre + "\n\t\tdomicilio = " + domicilio + "\n\t\tnif=" + nif + "\n\t\temail" + email;
-    }
 }

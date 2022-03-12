@@ -67,5 +67,8 @@ public class Articulos {
     public void setTiempoMinutos(int tiempoMinutos) {
         this.tiempoMinutos = tiempoMinutos;
     }
-  
+   @Override
+    public String toString() {
+        return "Articulo:\n\t" + "NumArticulo = " + numArticulo + "\n\tdescripcion = " + descripcion + "\n\tprecio = " + precio + "\n\tTiempoMinutos = " + tiempoMinutos + "\n\n";
+    }
 }
