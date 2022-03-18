@@ -26,14 +26,14 @@ public class Controlador {
 
 //ARTICULOS
     public  static void gestionArticulos() {
-        view.imprimeMenuArticulos();
+        VistaMenuArticulo.imprimeMenuArticulos();
     }
 
 
     public static void agregarArticulo() {
         boolean exito = false;
         List<Object> atributos = new ArrayList<Object>();
-        atributos = VistaStore.imprimeAgregarArticulo();
+        atributos = VistaNuevoArticulo.imprimeAgregarArticulo();
         exito = Datos.introducirArticulo(atributos);
         VistaStore.mensajeCreado(exito);
     }
@@ -43,7 +43,7 @@ public class Controlador {
         List lista = Datos.ListarArticulos();;
         // Llenar la array con los articulos
         // Llamar a la vista para mostrar los articulos
-        VistaStore.muestraArticulos(lista);
+        VistaMostrarArticulo.muestraArticulos(lista);
     }
     public static Articulo recuperarArticulo(int codigoArticulo){
         Articulo articulo=Datos.recuperarArticulo(codigoArticulo);
@@ -52,7 +52,7 @@ public class Controlador {
     //PEDIDOS
         public static void agregarPedido() {
         List<Object> atributos = new ArrayList<Object>();
-        atributos = VistaStore.imprimeAgregarPedido();
+        atributos = VistaNuevoPedido.imprimeAgregarPedido();
         try {
             Datos.introducirPedido(atributos);
             VistaStore.mensajeCreado(true);
@@ -65,10 +65,10 @@ public class Controlador {
         List lista = Datos.ListarPedidos();
         // Llenar la array con los articulos
         // Llamar a la vista para mostrar los articulos
-        VistaStore.muestraPedidos(lista);
+        VistaMuestraPedido.muestraPedidos(lista);
     }
         public static void eliminarPedido() {
-        int pedido=VistaStore.solicitarPedido();
+        int pedido=VistaEliminarPedido.solicitarPedido();
         try {
             Datos.eliminarPedido(pedido);
             VistaStore.mensajeEliminado();
@@ -82,34 +82,32 @@ public class Controlador {
     }
     
     
-    public static void gestionClientes(){
-        view.imprimeMenuClientes();
-    }
+
     
     public static void agregarCliente(){
         boolean exito =false;
         List<Object> atributos = new ArrayList<Object>();
-        atributos = VistaStore.imprimeAgregarCliente();
+        atributos = VistaNuevoCliente.imprimeAgregarCliente();
         exito = Datos.introducirCliente(atributos);
         VistaStore.mensajeCreado(exito);
     }
     public static void mostrarClientes(){
         List lista = Datos.ListarClientesP();
-        view.muestraClientesP(lista);
+        VistaMuestraCliente.muestraClientesP(lista);
         List lista2 = Datos.ListarClientesE();
-        view.muestraClientesE(lista2);
+        VistaMuestraCliente.muestraClientesE(lista2);
     }    
     public static void mostrarClientesP(){
         List lista = Datos.ListarClientesP();
-        view.muestraClientesP(lista);
+        VistaMuestraCliente.muestraClientesP(lista);
     }
     public static void mostrarClientesE(){
         List lista = Datos.ListarClientesE();
-        view.muestraClientesE(lista);
+        VistaMuestraCliente.muestraClientesE(lista);
     }
     
     public void gestionPedidos(){
-        view.imprimeMenuPedidos();
+        VistaMenuPedido.imprimeMenuPedidos();
     }
     public static ClientePremium recuperarCliente(String email){
         ClientePremium cliente=Datos.recuperarClientePremium(email);
