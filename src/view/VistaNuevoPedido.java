@@ -30,7 +30,9 @@ public class VistaNuevoPedido {
        Time hora;
        String email;
        List<Object> atributos = new ArrayList<Object>();
-       
+       System.out.println("###########################");
+       System.out.println("  FORMULARIO NUEVO PEDIDO  ");
+       System.out.println("###########################");       
        System.out.println("Introduce el un nº entero correspondiente al codigo del pedido");
        numPedido = obtenInt();
        atributos.add(numPedido);

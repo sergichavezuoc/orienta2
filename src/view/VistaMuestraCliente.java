@@ -14,8 +14,9 @@ import java.util.List;
 public class VistaMuestraCliente {
     //CLIENTES
    public static void muestraClientesP(List lista){
-        System.out.println("Lista de clientes Premium");
-        System.out.println("*****************************");
+           System.out.println("###########################");
+           System.out.println(" LISTADO CLIENTES PREMIUM  ");
+           System.out.println("###########################\n");
 
         for (int i = 0; i < lista.size(); i++) {           
             System.out.println(lista.get(i));

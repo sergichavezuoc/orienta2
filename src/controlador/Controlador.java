@@ -13,7 +13,8 @@ public class Controlador {
     private static Datos controlerModel;
     private  int opcion = 0;
 
-
+    public Controlador() {
+    }
     
     public static void  cargarDatos() {
         
@@ -76,14 +77,6 @@ public class Controlador {
             VistaStore.mensajeError(e.getMessage());
         }
     }
-    //CLIENTES
-
-    public Controlador() {
-    }
-    
-    
-
-    
     public static void agregarCliente(){
         boolean exito =false;
         List<Object> atributos = new ArrayList<Object>();

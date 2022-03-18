@@ -20,7 +20,9 @@ public class VistaNuevoCliente {
        String nombre, domicilio, nif, email;
        boolean premium;
        List<Object> atributos = new ArrayList<Object>();
-       
+       System.out.println("###########################");
+       System.out.println(" FORMULARIO NUEVO CLIENTE  ");
+       System.out.println("###########################");       
        System.out.println("Introduce el nombre del cliente");
        nombre = obtenString();
        atributos.add(nombre);

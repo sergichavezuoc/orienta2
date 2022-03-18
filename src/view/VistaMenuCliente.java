@@ -26,6 +26,9 @@ public class VistaMenuCliente {
        int opcion3;
         
        do {
+            System.out.println("###########################");
+            System.out.println("    GESTION DE CLIENTES    ");
+            System.out.println("###########################");
             System.out.println("Introduzca una opcion");
             System.out.println(" 1: Introducir cliente nuevo");
             System.out.println(" 2: Mostrar listado clientes ");

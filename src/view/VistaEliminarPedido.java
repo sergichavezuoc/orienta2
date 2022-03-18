@@ -13,6 +13,9 @@ import static view.VistaStore.obtenInt;
  */
 public class VistaEliminarPedido {
     public static int solicitarPedido(){
+      System.out.println("###########################");
+      System.out.println("    ELIMINAR PEDIDO     ");
+      System.out.println("###########################\n");
       System.out.println("Introduce el un nº entero del pedido a eliminar");
       int pedido = obtenInt();
       return pedido;

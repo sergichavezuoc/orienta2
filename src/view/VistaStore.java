@@ -30,6 +30,9 @@ public class VistaStore {
        int opcion;
         
        do {
+            System.out.println("###########################");
+            System.out.println("    TIENDA ONLINE    ");
+            System.out.println("###########################\n");
             System.out.println("Introduzca una opcion");
             System.out.println(" 1: Gestion Articulos");
             System.out.println(" 2: Gestion Clientes ");

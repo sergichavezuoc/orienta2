@@ -13,8 +13,9 @@ import java.util.List;
  */
 public class VistaMostrarArticulo {
 public static void muestraArticulos(List lista){
-        System.out.println("Lista de articulos guardados");
-        System.out.println("*****************************");
+           System.out.println("###########################");
+           System.out.println("    LISTADO DE ARTICULOS    ");
+           System.out.println("###########################");
 
         for (int i = 0; i < lista.size(); i++) {           
             System.out.println(lista.get(i));

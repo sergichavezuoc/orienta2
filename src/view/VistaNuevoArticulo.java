@@ -20,7 +20,9 @@ public class VistaNuevoArticulo {
        int numArticulo, precio, gastos, tiempoMinutos;
        String descripcion;
        List<Object> atributos = new ArrayList<Object>();
-       
+       System.out.println("###########################");
+       System.out.println(" FORMULARIO NUEVO ARTICULO ");
+       System.out.println("###########################\n");       
        System.out.println("Introduce el un nº entero correspondiente al codigo del articulo");
        numArticulo = obtenInt();
        atributos.add(numArticulo);

@@ -14,9 +14,9 @@ import java.util.List;
 public class VistaMuestraPedido {
     //PEDIDOS
       public static void muestraPedidos(List lista){
-        System.out.println("Lista de pedidos guardados");
-        System.out.println("*****************************");
-
+           System.out.println("###########################");
+           System.out.println("    LISTADO DE PEDIDOS    ");
+           System.out.println("###########################\n");
         for (int i = 0; i < lista.size(); i++) {           
             System.out.println(lista.get(i));
         }

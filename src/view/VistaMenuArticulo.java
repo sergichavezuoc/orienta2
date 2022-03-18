@@ -20,6 +20,9 @@ public class VistaMenuArticulo {
        int opcion2;
         
        do {
+           System.out.println("###########################");
+           System.out.println("    GESTION DE ARTICULOS    ");
+           System.out.println("###########################\n");
             System.out.println("Introduzca una opcion");
             System.out.println(" 1: Introducir articulo nuevo");
             System.out.println(" 2: Mostrar listado articulos ");

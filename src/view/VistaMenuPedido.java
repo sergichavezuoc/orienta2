@@ -21,6 +21,9 @@ public class VistaMenuPedido {
        int opcion2;
         
        do {
+            System.out.println("###########################");
+            System.out.println("    GESTION DE PEDIDOS    ");
+            System.out.println("###########################");
             System.out.println("Introduzca una opcion");
             System.out.println(" 1: Introducir un pedido");
             System.out.println(" 2: Mostrar listado pedidos ");
