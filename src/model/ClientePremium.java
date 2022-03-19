@@ -16,8 +16,9 @@ public class ClientePremium extends Cliente {
     }  
      public float descuentoEnv() { return 20;};
      public String tipoCliente() {return "Premium";};
-     public float calcAnual(){ return 30;};
+     public float calcAnual(){ return 30;};  
     public String toString() {
-        return "Cliente Premium:\n\t" + "nombre = " + nombre + "\n\tdomicilio = " + domicilio + "\n\tnif = " + nif + "\n\temail = " + email + "\n\tpremium = " + premium + "\n\n";
+        premium=true;
+        return "Cliente Premium:\n\t" + "nombre = " + nombre + "\n\tdomicilio = " + domicilio + "\n\tnif = " + nif + "\n\temail = " + email + "\n\tpremium = " + premium + "\n\tcuota anual = " + calcAnual() + "\n\n";
     }
 }

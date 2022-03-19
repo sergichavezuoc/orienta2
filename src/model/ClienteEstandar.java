@@ -19,6 +19,6 @@ public class ClienteEstandar extends Cliente {
      public float calcAnual(){ return 0;};
        @Override
     public String toString() {
-        return "Cliente Estandar:\n\t" + "nombre = " + nombre + "\n\tdomicilio = " + domicilio + "\n\tnif = " + nif + "\n\temail = " + email + "\n\tpremium = " + premium + "\n\n";
+        return "Cliente Estandar:\n\t" + "nombre = " + nombre + "\n\tdomicilio = " + domicilio + "\n\tnif = " + nif + "\n\temail = " + email + "\n\tpremium = " + premium + "\n\tcuota anual = " + calcAnual() + "\n\n";
     }
 }
