@@ -77,7 +77,7 @@ public class BaseDatos {
     }
     
     private static boolean esEliminable(Pedido pedido) {
-        return pedido.getArticulo().getTiempoMinutos() < ChronoUnit.MINUTES.between(pedido.getFecha(), LocalDateTime.now());
+        return pedido.getArticulo().getTiempoMinutos() > ChronoUnit.MINUTES.between(pedido.getFecha(), LocalDateTime.now());
     }
     
     public static ClientePremium obtenClientesPremium(String email){
