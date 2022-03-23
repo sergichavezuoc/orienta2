@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/controlador/OnlineStore.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/model/ClientePremium.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/model/Pedido.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/model/Articulo.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/model/BaseDatos.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/model/ElementFound.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/model/ElementNotFound.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/controlador/Controlador.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/model/ListaPedidos.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/src/model/Datos.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/test/model/DatosTest.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orientado2/test/model/ClientePremiumTest.java</file>
+        </group>
     </open-files>
 </project-private>

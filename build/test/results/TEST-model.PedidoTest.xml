@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="LAPTOP-UJ0VFTKS" name="model.ClientePremiumTest" skipped="0" tests="4" time="0.135" timestamp="2022-03-19T02:56:34">
+<testsuite errors="11" failures="0" hostname="LAPTOP-UJ0VFTKS" name="model.PedidoTest" skipped="0" tests="11" time="0.374" timestamp="2022-03-19T02:55:13">
   <properties>
     <property name="netbeans.autoupdate.country" value="ES" />
     <property name="nb.wait.for.caches" value="true" />
@@ -40,7 +40,7 @@
     <property name="ant.file.onlineStore-impl" value="G:\Mi unidad\UOC\P5 Programación orientenda a objetos con BBDD\orientado2\nbproject\build-impl.xml" />
     <property name="copylibs.rebase" value="true" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner model.ClientePremiumTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,G:\Mi unidad\UOC\P5 Programación orientenda a objetos con BBDD\orientado2\build\test\results\TEST-model.ClientePremiumTest.xml crashfile=G:\Mi unidad\UOC\P5 Programación orientenda a objetos con BBDD\orientado2\build\junitvmwatcher1250871960673366790.properties propsfile=G:\Mi unidad\UOC\P5 Programación orientenda a objetos con BBDD\orientado2\build\junit1386875177159416923.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner model.PedidoTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,G:\Mi unidad\UOC\P5 Programación orientenda a objetos con BBDD\orientado2\build\test\results\TEST-model.PedidoTest.xml crashfile=G:\Mi unidad\UOC\P5 Programación orientenda a objetos con BBDD\orientado2\build\junitvmwatcher2302192793111669300.properties propsfile=G:\Mi unidad\UOC\P5 Programación orientenda a objetos con BBDD\orientado2\build\junit1622392121361335368.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -323,14 +323,72 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="model.ClientePremiumTest" name="testToString" time="0.034" />
-  <testcase classname="model.ClientePremiumTest" name="testCalcAnual" time="0.0" />
-  <testcase classname="model.ClientePremiumTest" name="testTipoCliente" time="0.001" />
-  <testcase classname="model.ClientePremiumTest" name="testDescuentoEnv" time="0.001" />
-  <system-out><![CDATA[toString
-calcAnual
-tipoCliente
-descuentoEnv
+  <testcase classname="model.PedidoTest" name="testGetNumPedido" time="0.025">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testGetNumPedido(PedidoTest.java:49)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testGetFecha" time="0.001">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testGetFecha(PedidoTest.java:157)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testSetCliente" time="0.001">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testSetCliente(PedidoTest.java:90)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testToString" time="0.001">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testToString(PedidoTest.java:184)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testSetNumPedido" time="0.001">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testSetNumPedido(PedidoTest.java:63)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testSetArticulo" time="0.002">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testSetArticulo(PedidoTest.java:117)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testGetArticulo" time="0.002">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testGetArticulo(PedidoTest.java:103)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testGetCliente" time="0.002">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testGetCliente(PedidoTest.java:76)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testSetCantidad" time="0.001">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testSetCantidad(PedidoTest.java:144)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testGetCantidad" time="0.001">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testGetCantidad(PedidoTest.java:130)
+</error>
+  </testcase>
+  <testcase classname="model.PedidoTest" name="testSetFecha" time="0.001">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at model.PedidoTest.testSetFecha(PedidoTest.java:171)
+</error>
+  </testcase>
+  <system-out><![CDATA[getNumPedido
+getFecha
+setCliente
+toString
+setNumPedido
+setArticulo
+getArticulo
+getCliente
+setCantidad
+getCantidad
+setFecha
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
