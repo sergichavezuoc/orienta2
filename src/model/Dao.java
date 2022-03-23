@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface Dao<T> {
     
     T get(long id);
+    T get(String email);
     
     List<T> getAll();
     

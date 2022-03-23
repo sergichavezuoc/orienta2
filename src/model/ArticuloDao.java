@@ -21,7 +21,10 @@ public class ArticuloDao implements Dao<Articulo> {
     public ArticuloDao(Connection conn) {
         this.conn = conn;
     }
-
+    @Override
+    public Articulo get(String id) {
+     return null;   
+    }
     @Override
     public Articulo get(long id) {
         try (PreparedStatement stmt = conn

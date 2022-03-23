@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package model;
-
+import model.ClienteDao;
+import java.sql.Connection;
 /**
  *
  * @author sergichavez
@@ -55,7 +56,12 @@ public abstract class Cliente {
         this.email = email;
     }
     
-    
+    public Cliente get(String email){
+      Cliente clientedevuelto;
+      Connection conn = null;
+      clientedevuelto = new ClienteDao(conn).get(email);
+      return clientedevuelto;
+    };
     
  public abstract String tipoCliente();
  

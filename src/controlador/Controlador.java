@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
 import view.*;
+import java.sql.Connection;
+import java.time.LocalDateTime;
 
 public class Controlador {
     
@@ -32,10 +34,11 @@ public class Controlador {
 
 
     public static void agregarArticulo() {
-        boolean exito = false;
+        boolean exito = true;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoArticulo.imprimeAgregarArticulo();
-        exito = Datos.introducirArticulo(atributos);
+        Connection conn = null;
+        new ArticuloDao(conn).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4))); 
         VistaStore.mensajeCreado(exito);
     }
 
@@ -56,6 +59,9 @@ public class Controlador {
         atributos = VistaNuevoPedido.imprimeAgregarPedido();
         try {
             Datos.introducirPedido(atributos);
+            Connection conn = null;
+            new PedidoDao().save(new Pedido ((Integer)atributos.get(0), (Cliente)atributos.get(1), (Articulo)atributos.get(2), (Integer)atributos.get(3),(LocalDateTime)atributos.get(4))); 
+
             VistaStore.mensajeCreado(true);
         } catch (ElementFound e) {
             VistaStore.mensajeError(e.getMessage());
@@ -78,10 +84,15 @@ public class Controlador {
         }
     }
     public static void agregarCliente(){
-        boolean exito =false;
+        boolean exito =true;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoCliente.imprimeAgregarCliente();
-        exito = Datos.introducirCliente(atributos);
+        Connection conn = null;
+        if (atributos.get(4).equals("si")) {
+        new ClienteDao(conn).save(new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
+        } else {
+        new ClienteDao(conn).save(new ClienteEstandar(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
+        }
         VistaStore.mensajeCreado(exito);
     }
     public static void mostrarClientes(){

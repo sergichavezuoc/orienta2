@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import model.Cliente;
 /**
  *
  * @author maria
@@ -20,15 +20,31 @@ public class ClienteDao implements Dao<Cliente> {
     public ClienteDao(Connection conn) {
         this.conn = conn;
     }
-
     @Override
     public Cliente get(long id) {
+      return null;  
+    }
+    @Override
+    public Cliente get(String email) {
         try (PreparedStatement stmt = conn
-                .prepareStatement("SELECT * FROM cliente WHERE id = ?")) {
-            stmt.setLong(1, id);
+                .prepareStatement("SELECT * FROM cliente WHERE email = ?")) {
+            stmt.setString(1, email);
             ResultSet result = stmt.executeQuery();
             if (result.next()) {
                 return buildCliente(result);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public String getNombre(String email) {
+        try (PreparedStatement stmt = conn
+                .prepareStatement("SELECT * FROM cliente WHERE email = ?")) {
+            stmt.setString(1, email);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+                return result.getString("nombre");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,6 +59,7 @@ public class ClienteDao implements Dao<Cliente> {
 
     @Override
     public void save(Cliente t) {
+        
     }
 
     @Override

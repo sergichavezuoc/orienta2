@@ -15,11 +15,11 @@ import java.util.Date;
  * @author sergichavez
  */
 public class Pedido {
-private int numPedido;
-private Cliente cliente;
-private Articulo articulo;
-private int cantidad;
-private LocalDateTime fecha;
+protected int numPedido;
+protected Cliente cliente;
+protected Articulo articulo;
+protected int cantidad;
+protected LocalDateTime fecha;
 
     public Pedido(){
         
@@ -78,6 +78,6 @@ private LocalDateTime fecha;
        @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getEmail() + "\n\tarticulo = " + articulo.getDescripcion() + "\n\tFecha = " + fecha.format(formatter) + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() +"%)\n";
+        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() + "\n\tarticulo = " + articulo.getDescripcion() + "\n\tFecha = " + fecha.format(formatter) + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() +"%)\n";
     }
 }
