@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Cliente;
+import model.ClienteDao;
 import model.Articulo;
 import model.ArticuloDao;
 
@@ -86,10 +87,11 @@ public class PedidoDao implements Dao<Pedido> {
         pedido = new Pedido();
       
         // si llega aquÃ­ es porque no ha petado y devuelto SQLException
-        articulo.get(result.getInt("articulo"));
+        Connection conn = null;
+        articulo=new ArticuloDao(conn).get("articulo");
         pedido.setArticulo(articulo);
         pedido.setCantidad(result.getInt("cantidad"));
-        cliente.get("cliente");
+        cliente=new ClienteDao(conn).get("cliente");
         pedido.setCliente(cliente);
         // TODO recuperar fecha y convertirla en LocalDateTime
         pedido.setFecha(LocalDateTime.now());

@@ -69,12 +69,6 @@ public class Articulo {
     public void setTiempoMinutos(int tiempoMinutos) {
         this.tiempoMinutos = tiempoMinutos;
     }
-    public Articulo get(int id){
-      Articulo articulodevuelto;
-      Connection conn = null;
-      articulodevuelto = new ArticuloDao(conn).get(id);
-      return articulodevuelto;
-    };
    @Override
     public String toString() {
         return "Articulo:\n\t" + "NumArticulo = " + numArticulo + "\n\tdescripcion = " + descripcion + "\n\tprecio = " + precio + "\n\tTiempoMinutos = " + tiempoMinutos + "\n\n";

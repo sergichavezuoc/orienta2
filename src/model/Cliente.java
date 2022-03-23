@@ -56,13 +56,6 @@ public abstract class Cliente {
         this.email = email;
     }
     
-    public Cliente get(String email){
-      Cliente clientedevuelto;
-      Connection conn = null;
-      clientedevuelto = new ClienteDao(conn).get(email);
-      return clientedevuelto;
-    };
-    
  public abstract String tipoCliente();
  
  public abstract float calcAnual();
