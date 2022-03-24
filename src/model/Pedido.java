@@ -21,7 +21,9 @@ private Articulo articulo;
 private int cantidad;
 private LocalDateTime fecha;
 
-
+    public Pedido(){
+        
+    }
     public Pedido(int numPedido, Cliente cliente, Articulo articulo, int cantidad, LocalDateTime fecha) {
         this.numPedido = numPedido;
         this.cliente = cliente;
@@ -76,6 +78,6 @@ private LocalDateTime fecha;
        @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getEmail() + "\n\tarticulo = " + articulo.getDescripcion() + "\n\tFecha = " + fecha.format(formatter) + "\n";
+        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getEmail() + "\n\tarticulo = " + articulo.getDescripcion() + "\n\tFecha = " + fecha.format(formatter) + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() +"%)\n";
     }
 }

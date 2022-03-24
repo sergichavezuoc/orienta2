@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author jmart
+ * @author mamaroa
  */
 public class ElementFound extends Exception {
 

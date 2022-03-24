@@ -16,13 +16,13 @@ import static view.VistaStore.obtenString;
  */
 public class VistaNuevoArticulo {
    public static List imprimeAgregarArticulo(){
-       //int numArticulo, String descripcion, int precio, int gastos, int tiempoMinutos
+       
        int numArticulo, precio, gastos, tiempoMinutos;
        String descripcion;
        List<Object> atributos = new ArrayList<Object>();
        System.out.println("###########################");
        System.out.println(" FORMULARIO NUEVO ARTICULO ");
-       System.out.println("###########################\n");       
+       System.out.println("###########################");       
        System.out.println("Introduce el un nº entero correspondiente al codigo del articulo");
        numArticulo = obtenInt();
        atributos.add(numArticulo);

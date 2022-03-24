@@ -2,7 +2,7 @@ package model;
 
 /**
  *
- * @author mamaroa
+ * @author maria
  */
 public class ClientNotFound extends Exception {
 
