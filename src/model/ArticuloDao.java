@@ -44,6 +44,18 @@ public class ArticuloDao implements Dao<Articulo, Long> {
 
     @Override
     public void save(Articulo t) {
+                try (PreparedStatement stmt = conn
+                .prepareStatement("INSERT INTO articulo (nombre,descripcion,precio,gastos,premium) VALUES (?,?,?,?,?)")) {
+            stmt.setInt(1, t.numArticulo);
+            stmt.setString(2, t.descripcion);
+            stmt.setInt(3, t.precio);
+            stmt.setInt(4, t.gastos);
+            stmt.setInt(4, t.tiempoMinutos);
+
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
     }
 

@@ -12,11 +12,11 @@ import java.sql.Connection;
  * @author sergichavez
  */
 public class Articulo {
-  private int numArticulo;
-  private String descripcion;
-  private int precio;
-  private int gastos;
-  private int tiempoMinutos; 
+  protected int numArticulo;
+  protected String descripcion;
+  protected int precio;
+  protected int gastos;
+  protected int tiempoMinutos; 
 
     public Articulo(){
         
