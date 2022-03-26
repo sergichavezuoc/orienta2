@@ -7,6 +7,9 @@ import java.util.logging.Logger;
 import model.*;
 import view.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Controlador {
@@ -14,16 +17,26 @@ public class Controlador {
     private  static VistaStore view;
     private static Datos controlerModel;
     private  int opcion = 0;
+    private Connection connection;
 
     public Controlador() {
+        try {
+            this.connection = DatabaseConnection.createConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM cliente");
+            ResultSet res = stmt.executeQuery();
+            res.next();
+            System.out.println(res.getString("nombre"));
+            
+        } catch (SQLException e) {
+            // TODO crear vista con System.out.println("Ha habido problema en la conexión");
+        }
     }
     
-    public static void  cargarDatos() {
-        
+    public void cargarDatos() {
         Datos.cargarDatos();
     }
     
-    public static void  mostrarMenuPrincipal() throws Exception{
+    public void  mostrarMenuPrincipal() throws Exception{
         view.imprimeMenu();
     }
 
@@ -33,12 +46,11 @@ public class Controlador {
     }
 
 
-    public static void agregarArticulo() {
+    public void agregarArticulo() {
         boolean exito = true;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoArticulo.imprimeAgregarArticulo();
-        Connection conn = null;
-        new ArticuloDao(conn).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4))); 
+        new ArticuloDao(connection).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4))); 
         VistaStore.mensajeCreado(exito);
     }
 
@@ -54,27 +66,26 @@ public class Controlador {
         return articulo;
     }
     //PEDIDOS
-        public static void agregarPedido() {
+        public void agregarPedido() {
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoPedido.imprimeAgregarPedido();
         try {
             Datos.introducirPedido(atributos);
-            Connection conn = null;
-            new PedidoDao().save(new Pedido ((Integer)atributos.get(0), (Cliente)atributos.get(1), (Articulo)atributos.get(2), (Integer)atributos.get(3),(LocalDateTime)atributos.get(4))); 
+            new PedidoDao(connection).save(new Pedido ((Integer)atributos.get(0), (Cliente)atributos.get(1), (Articulo)atributos.get(2), (Integer)atributos.get(3),(LocalDateTime)atributos.get(4))); 
 
             VistaStore.mensajeCreado(true);
         } catch (ElementFound e) {
             VistaStore.mensajeError(e.getMessage());
         }
     }
-        public static void  mostrarPedidos() {
+        public void  mostrarPedidos() {
         // Crear una array temporal para recibir articulos
         List lista = Datos.ListarPedidos();
         // Llenar la array con los articulos
         // Llamar a la vista para mostrar los articulos
         VistaMuestraPedido.muestraPedidos(lista);
     }
-        public static void eliminarPedido() {
+        public void eliminarPedido() {
         int pedido=VistaEliminarPedido.solicitarPedido();
         try {
             Datos.eliminarPedido(pedido);
@@ -83,15 +94,14 @@ public class Controlador {
             VistaStore.mensajeError(e.getMessage());
         }
     }
-    public static void agregarCliente(){
+    public void agregarCliente(){
         boolean exito =true;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoCliente.imprimeAgregarCliente();
-        Connection conn = null;
         if (atributos.get(4).equals("si")) {
-        new ClienteDao(conn).save(new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
+        new ClienteDao(connection).save(new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString()));
         } else {
-        new ClienteDao(conn).save(new ClienteEstandar(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
+        new ClienteDao(connection).save(new ClienteEstandar(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
         }
         VistaStore.mensajeCreado(exito);
     }

@@ -7,10 +7,9 @@ import java.util.Optional;
  *
  * @author maria
  */
-public interface Dao<T> {
+public interface Dao<T, R> {
     
-    T get(long id);
-    T get(String email);
+    T get(R id);
     
     List<T> getAll();
     

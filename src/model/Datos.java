@@ -44,7 +44,7 @@ public class Datos {
         boolean resultado= Boolean.valueOf((Boolean)atributos.get(4));
         //Si el cliente es premium
         if(resultado = true){
-            ClientePremium clienteP = new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4));
+            ClientePremium clienteP = new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString());
             BaseDatos.AgregarClientePremium(clienteP);
         //si el cliente es estandar
         }else{

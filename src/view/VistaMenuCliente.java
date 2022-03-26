@@ -20,7 +20,7 @@ public class VistaMenuCliente {
         imprimeMenuClientes();
     }  
       public static void imprimeMenuClientes(){
-       Controlador controlador = null;
+       Controlador controlador = new Controlador();
        Scanner teclado3 = new Scanner(System.in); 
        boolean salir = false;
        int opcion3;

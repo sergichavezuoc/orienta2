@@ -13,17 +13,14 @@ import model.Cliente;
  *
  * @author maria
  */
-public class ClienteDao implements Dao<Cliente> {
+public class ClienteDao implements Dao<Cliente, String> {
     
     Connection conn;
     
     public ClienteDao(Connection conn) {
         this.conn = conn;
     }
-    @Override
-    public Cliente get(long id) {
-      return null;  
-    }
+    
     @Override
     public Cliente get(String email) {
         try (PreparedStatement stmt = conn
@@ -38,18 +35,9 @@ public class ClienteDao implements Dao<Cliente> {
         }
         return null;
     }
-    public String getNombre(String email) {
-        try (PreparedStatement stmt = conn
-                .prepareStatement("SELECT * FROM cliente WHERE email = ?")) {
-            stmt.setString(1, email);
-            ResultSet result = stmt.executeQuery();
-            if (result.next()) {
-                return result.getString("nombre");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    
+    public String getByNombre(String email) {
+        return get(email).getEmail();
     }
    
     @Override
@@ -59,7 +47,21 @@ public class ClienteDao implements Dao<Cliente> {
 
     @Override
     public void save(Cliente t) {
-        
+        try (PreparedStatement stmt = conn
+                .prepareStatement("INSERT INTO cliente (nombre,domicilio,nif,email,premium) VALUES (?,?,?,?,?)")) {
+            stmt.setString(1, t.nombre);
+            stmt.setString(2, t.domicilio);
+            stmt.setString(3, t.nif);
+            stmt.setString(4, t.email);
+            if (t instanceof ClientePremium) {
+                stmt.setString(5,"si");
+            } else {
+                stmt.setString(5,"no");
+            }
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

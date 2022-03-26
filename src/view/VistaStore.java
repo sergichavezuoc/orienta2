@@ -71,16 +71,6 @@ public class VistaStore {
        }
    }
    
-   
-
-   
- 
-   
-   
-   
-   
-   
-   
    //metodos lectura de teclado
    public static int obtenInt(){
        Scanner tecladoInt = new Scanner(System.in); 
@@ -99,15 +89,12 @@ public class VistaStore {
    public static boolean obtenBoolean(){
        Scanner tecladoString = new Scanner(System.in);
        String cadena = tecladoString.nextLine();
-       String cadenaSi= "Si";
-       String cadenaNo= "No";
-       if(cadena==cadenaSi){
+       if(cadena.equals("si")){
            cadena="true";
        }else{
            cadena="false";
        }
-       boolean bool = Boolean.valueOf(cadena);
-       return bool;
+       return Boolean.valueOf(cadena);
    }
 
     public static void mensajeEliminado() {
