@@ -10,5 +10,12 @@ package model;
  * @author maria
  */
 public class DatabaseConnection {
-    
+    public static Connection createConnection() throws SQLException {
+        if (connection == null) {
+            connection = DriverManager.getConnection(url, username, password);
+        }
+        return connection;
+    }
 }
+
+

@@ -56,9 +56,9 @@ public class ArticuloDao implements Dao<Articulo, Long> {
         Articulo articulo;
         articulo = new Articulo();
       
-        // si llega aquÃƒÂ­ es porque no ha petado y devuelto SQLException
+        // si llega aquÃ­ es porque no ha petado y devuelto SQLException
         articulo.setNumArticulo(result.getInt("Numero Articulo"));
-        articulo.setDescripcion(result.getString("descripciÃ³n"));
+        articulo.setDescripcion(result.getString("descripción"));
         articulo.setPrecio(result.getInt("precio"));
         articulo.setGastos(result.getInt("Gastos"));
         articulo.setTiempoMinutos(result.getInt("tiempoMinutos"));
