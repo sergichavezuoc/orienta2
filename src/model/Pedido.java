@@ -68,9 +68,9 @@ protected LocalDateTime fecha;
     public LocalDateTime getFecha() {
         return fecha;
     }
-
+    
     public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
+        this.fecha = LocalDateTime.now();
     }
 
     
@@ -78,6 +78,26 @@ protected LocalDateTime fecha;
        @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() + "\n\tarticulo = " + articulo.getDescripcion() + "\n\tFecha = " + fecha.format(formatter) + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() +"%)\n";
+        DateTimeFormatter isoFecha =DateTimeFormatter.ISO_LOCAL_DATE;
+        DateTimeFormatter isoHora =DateTimeFormatter.ISO_LOCAL_TIME;
+
+        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() +  "\n\tarticulo = " + articulo.getDescripcion() +"\n\tFecha = " + fecha.format(isoFecha) + fecha.format(isoHora) + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() + "%)\n";
     }
 }
+/*
+
++ "\n\tarticulo = " + articulo.getDescripcion() + "\n\tFecha = " + fecha.format(isoFecha) + fecha.format(isoHora) + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() + "%)\n";
+
+ articulo = new ArticuloDao(conn).get(result.getLong("numArticulo"));
+        pedido.setArticulo(articulo);
+        pedido.setCantidad(result.getInt("cantidad"));
+        cliente = new ClienteDao(conn).get(result.getString("nif"));
+        pedido.setCliente(cliente);   
+        String str = result.getString("fechaHora");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
+        LocalDateTime LDT = LocalDateTime.parse(str, formatter);
+        pedido.setFecha(LDT);
+        System.out.println(LDT);
+        pedido.setNumPedido(result.getInt("numPedido"));
+        return pedido;
+*/

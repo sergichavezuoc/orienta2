@@ -6,6 +6,7 @@
 package view;
 
 import controlador.Controlador;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Scanner;
  * @author sergichavez
  */
 public class VistaMenuArticulo {
-  public static void imprimeMenuArticulos(){
+  public static void imprimeMenuArticulos() throws SQLException{
        Controlador controlador = new Controlador();
        Scanner teclado2 = new Scanner(System.in); 
        boolean salir = false;

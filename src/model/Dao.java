@@ -13,7 +13,7 @@ public interface Dao<T, R> {
     
     List<T> getAll();
     
-    void save(T t);
+    boolean save(T t);
         
     void delete(T t);
     

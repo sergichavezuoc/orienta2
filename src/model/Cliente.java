@@ -15,13 +15,14 @@ public abstract class Cliente {
  protected String domicilio;
  protected String nif;
  protected String email;
- protected boolean premium=false;
+ protected boolean premium;
        
     public Cliente(String nombre, String domicilio, String nif, String email,boolean premium) {
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.nif = nif;
         this.email = email;
+        this.premium = premium;
     }
 
     public String getNombre() {
@@ -43,7 +44,7 @@ public abstract class Cliente {
     public String getNif() {
         return nif;
     }
-
+    
     public void setNif(String nif) {
         this.nif = nif;
     }
@@ -54,6 +55,14 @@ public abstract class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public boolean getPremium(){
+        return premium;
+    }
+    
+    public void setPremium(boolean premium){
+        this.premium = premium;
     }
     
  public abstract String tipoCliente();

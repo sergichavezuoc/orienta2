@@ -9,17 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Cliente;
-import model.ClienteDao;
-import model.Articulo;
-import model.ArticuloDao;
+
 
 
 /**
@@ -52,27 +46,46 @@ public class PedidoDao implements Dao<Pedido, Long> {
         return null;
     }
 
-
+  
     @Override
     public List<Pedido> getAll() {
-      return null;
+      ArrayList<Pedido> pedidos = new ArrayList<>();
+      
+      try{
+          PreparedStatement stmt = conn.prepareStatement("SELECT numPedido, nif, numArticulo, cantidad, CONCAT(fecha,hora) AS fechaHora FROM pedido");
+          ResultSet result = stmt.executeQuery();
+          while(result.next()){
+              Pedido buildPedido = buildPedido(result);
+              pedidos.add(buildPedido);
+          }
+      }catch(Exception e){
+          e.printStackTrace();
+      }
+      return pedidos;
     }
 
     @Override
-    public void save(Pedido t) {
-        try (PreparedStatement stmt = conn
-                .prepareStatement("INSERT INTO pedido (numPedido,cliente,articulo,cantidad,fecha) VALUES (?,?,?,?,?)")) {
+    public boolean save(Pedido t) {
+        LocalDateTime fecha = t.fecha;
+        DateTimeFormatter isoFecha = DateTimeFormatter.ISO_LOCAL_DATE;
+        DateTimeFormatter isoHora =DateTimeFormatter.ISO_LOCAL_TIME;
+        boolean exito = false;
+        
+        try (
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO pedido (numPedido, nif, numArticulo, cantidad, fecha, hora) VALUES (?,?,?,?,?,?)")) {
             stmt.setLong(1, t.numPedido);
-            stmt.setString(2, t.cliente.email);
+            stmt.setString(2, t.cliente.getNif());
             stmt.setInt(3, t.articulo.getNumArticulo());
             stmt.setInt(4, t.cantidad);
-            //TODO convertir fecha de pedido en Date para pasar a SQL date
-            java.sql.Timestamp sqlDate = java.sql.Timestamp.valueOf(t.fecha);
-            stmt.setObject(5, sqlDate);
-            stmt.executeQuery();
+            stmt.setString(5, fecha.format(isoFecha));
+            stmt.setString(6, fecha.format(isoHora));          
+            stmt.executeUpdate();
+            exito =true;
+            
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }  
+        return exito;
     }
 
     @Override
@@ -80,20 +93,21 @@ public class PedidoDao implements Dao<Pedido, Long> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private Pedido buildPedido(ResultSet result) throws SQLException {
-        Pedido pedido;
+        Pedido pedido= new Pedido();
         Articulo articulo;
         Cliente cliente;
-        pedido = new Pedido();
-      
-        // si llega aquÃ­ es porque no ha petado y devuelto SQLException
-        articulo=new ArticuloDao(conn).get(result.getLong("articulo"));
+        
+        articulo = new ArticuloDao(conn).get(result.getLong("numArticulo"));
         pedido.setArticulo(articulo);
         pedido.setCantidad(result.getInt("cantidad"));
-        cliente=new ClienteDao(conn).get(result.getString("cliente"));
-        pedido.setCliente(cliente);
-        // TODO recuperar fecha y convertirla en LocalDateTime
-        pedido.setFecha(LocalDateTime.now());
+        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numArticulo"));
+        pedido.setCliente(cliente);   
+        String str = result.getString("fechaHora");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
+        LocalDateTime LDT = LocalDateTime.parse(str, formatter);
+        pedido.setFecha(LDT);
         pedido.setNumPedido(result.getInt("numPedido"));
         return pedido;
+        
     }
 }

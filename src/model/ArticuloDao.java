@@ -5,9 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -17,6 +19,7 @@ import java.util.logging.Logger;
 public class ArticuloDao implements Dao<Articulo, Long> {
         
     Connection conn;
+    DefaultTableModel DT;
     
     public ArticuloDao(Connection conn) {
         this.conn = conn;
@@ -24,39 +27,66 @@ public class ArticuloDao implements Dao<Articulo, Long> {
     
     @Override
     public Articulo get(Long id) {
+        Articulo articulo =null;
         try (PreparedStatement stmt = conn
-                .prepareStatement("SELECT * FROM articulo WHERE id = ?")) {
+                .prepareStatement("SELECT * FROM articulo WHERE numArticulo = ?")) {
             stmt.setLong(1, id);
             ResultSet result = stmt.executeQuery();
             if (result.next()) {
-                return buildArticulo(result);
+                articulo = buildArticulo(result);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return articulo;
+    }
+    public Articulo getArticulo(String nombre){
+         Articulo articulo=null;
+        try{
+            PreparedStatement stmt =conn.prepareStatement("SELECT * FROM articulo WHERE descripcion = ?");
+            stmt.setString(1, nombre);
+            ResultSet result = stmt.executeQuery();
+            if(result.next()){
+                articulo = buildArticulo(result);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return articulo;
     }
    
     @Override
     public List<Articulo> getAll() {
-        return null;
+        ArrayList <Articulo> articulos = new ArrayList<>();
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM articulo");
+            ResultSet result = stmt.executeQuery();
+            while(result.next()){
+                Articulo buildArticulo = buildArticulo(result);                
+                articulos.add(buildArticulo);
+            }  
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return articulos;
     }
 
     @Override
-    public void save(Articulo t) {
+    public boolean save(Articulo t) {
+        boolean exito = false;
                 try (PreparedStatement stmt = conn
-                .prepareStatement("INSERT INTO articulo (nombre,descripcion,precio,gastos,premium) VALUES (?,?,?,?,?)")) {
+                .prepareStatement("INSERT INTO articulo (numArticulo, descripcion, precio, gastos, tiempoMinutos) VALUES (?,?,?,?,?)")) {
             stmt.setInt(1, t.numArticulo);
             stmt.setString(2, t.descripcion);
             stmt.setInt(3, t.precio);
             stmt.setInt(4, t.gastos);
-            stmt.setInt(4, t.tiempoMinutos);
-
+            stmt.setInt(5, t.tiempoMinutos);
             stmt.executeUpdate();
+            exito = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+        return exito;
     }
 
     @Override
@@ -69,10 +99,10 @@ public class ArticuloDao implements Dao<Articulo, Long> {
         articulo = new Articulo();
       
         // si llega aquÃ­ es porque no ha petado y devuelto SQLException
-        articulo.setNumArticulo(result.getInt("Numero Articulo"));
-        articulo.setDescripcion(result.getString("descripción"));
+        articulo.setNumArticulo(result.getInt("numArticulo"));
+        articulo.setDescripcion(result.getString("descripcion"));
         articulo.setPrecio(result.getInt("precio"));
-        articulo.setGastos(result.getInt("Gastos"));
+        articulo.setGastos(result.getInt("gastos"));
         articulo.setTiempoMinutos(result.getInt("tiempoMinutos"));
         return articulo;
     }

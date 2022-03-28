@@ -12,6 +12,14 @@ import java.util.List;
  * @author sergichavez
  */
 public class VistaMuestraCliente {
+    public static void muestraClientes(List lista){
+        System.out.println("###########################");
+        System.out.println("LISTADO DE CLIENTES");
+        System.out.println("###########################");
+        for (int i = 0; i < lista.size(); i++) {   
+            System.out.println(lista.get(i));
+        }
+    }
     //CLIENTES
    public static void muestraClientesP(List lista){
            System.out.println("###########################");
@@ -23,7 +31,7 @@ public class VistaMuestraCliente {
         }
    }
    public static void muestraClientesE(List lista){
-        System.out.println("Lista de clientes NO Premium");
+        System.out.println("LISTADO DE CLIENTES ESTÁNDAR");
         System.out.println("*****************************");
 
         for (int i = 0; i < lista.size(); i++) {           

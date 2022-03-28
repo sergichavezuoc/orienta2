@@ -25,6 +25,7 @@ public class VistaNuevoPedido {
        //int numArticulo, String descripcion, int precio, int gastos, int tiempoMinutos
        int numPedido, cantidad;
        Cliente cliente;
+       String nif, nombreArticulo;
        Articulo articulo;
        Date fecha;
        Time hora;
@@ -40,13 +41,13 @@ public class VistaNuevoPedido {
        String respuesta=obtenString();
        System.out.println("Introduce el email del cliente");
        email = obtenString();
-       if (respuesta.equals("si")) {cliente = Controlador.recuperarCliente(email);}
-       else {cliente = Controlador.recuperarClienteE(email);};
+       cliente = Controlador.recuperarCliente(email);
+       System.out.print(cliente);
        if (cliente==null){System.out.println("Cliente no encontrado. Pruebe de nuevo a entrar el pedido\n\n");imprimeAgregarPedido();};
        atributos.add(cliente);
-       System.out.println("Introduce el codigo del articulo");
-       int codigoArticulo = obtenInt();
-       articulo = Controlador.recuperarArticulo(codigoArticulo);
+       System.out.println("Introduce el nombre del articulo");
+       nombreArticulo = obtenString();
+       articulo = Controlador.recuperarArticulo(nombreArticulo);
        if (articulo==null){System.out.println("Articulo no encontrado. Pruebe de nuevo a entrar el pedido\n\n");imprimeAgregarPedido();};       
        atributos.add(articulo);
        System.out.println("Introduce cantidad");

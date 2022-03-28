@@ -17,7 +17,8 @@ import static view.VistaStore.obtenString;
 public class VistaNuevoCliente {
    public static List imprimeAgregarCliente(){
        //String nombre, String domicilio, String nif, String email
-       String nombre, domicilio, nif, email, premium;
+       String nombre, domicilio, nif, email;
+       boolean premium;
        List<Object> atributos = new ArrayList<Object>();
        System.out.println("###########################");
        System.out.println(" FORMULARIO NUEVO CLIENTE  ");
@@ -35,7 +36,7 @@ public class VistaNuevoCliente {
        email = obtenString();
        atributos.add(email);
        System.out.println("¿El cliente es premium? Responda si o no");
-       premium = obtenString();
+       premium = obtenBoolean();
        atributos.add(premium);
        return atributos;    
         

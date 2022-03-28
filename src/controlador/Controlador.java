@@ -2,8 +2,6 @@
 package controlador;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.*;
 import view.*;
 import java.sql.Connection;
@@ -17,7 +15,7 @@ public class Controlador {
     private  static VistaStore view;
     private static Datos controlerModel;
     private  int opcion = 0;
-    private Connection connection;
+    private  static Connection connection;
 
     public Controlador() {
         try {
@@ -40,8 +38,9 @@ public class Controlador {
         view.imprimeMenu();
     }
 
-//ARTICULOS
-    public  static void gestionArticulos() {
+//GESTION ARTICULOS
+    
+    public  static void gestionArticulos() throws SQLException {
         VistaMenuArticulo.imprimeMenuArticulos();
     }
 
@@ -50,40 +49,37 @@ public class Controlador {
         boolean exito = true;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoArticulo.imprimeAgregarArticulo();
-        new ArticuloDao(connection).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4))); 
+        if(new ArticuloDao(connection).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4)))){
+            exito = true;
+        } 
         VistaStore.mensajeCreado(exito);
     }
 
-    public static void  mostrarArticulos() {
-        // Crear una array temporal para recibir articulos
-        List lista = Datos.ListarArticulos();;
-        // Llenar la array con los articulos
-        // Llamar a la vista para mostrar los articulos
+    public static void  mostrarArticulos() throws SQLException {
+        List lista = new ArticuloDao(connection).getAll();
         VistaMostrarArticulo.muestraArticulos(lista);
     }
-    public static Articulo recuperarArticulo(int codigoArticulo){
-        Articulo articulo=Datos.recuperarArticulo(codigoArticulo);
+    public static Articulo recuperarArticulo(String nombreArticulo){
+        Articulo articulo = new ArticuloDao(connection).getArticulo(nombreArticulo);
         return articulo;
     }
-    //PEDIDOS
-        public void agregarPedido() {
+    
+    //GESTION PEDIDOS
+    
+    public void agregarPedido() {
+        boolean exito;    
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoPedido.imprimeAgregarPedido();
-        try {
-            Datos.introducirPedido(atributos);
-            new PedidoDao(connection).save(new Pedido ((Integer)atributos.get(0), (Cliente)atributos.get(1), (Articulo)atributos.get(2), (Integer)atributos.get(3),(LocalDateTime)atributos.get(4))); 
+        if(new PedidoDao(connection).save(new Pedido ((Integer)atributos.get(0), (Cliente)atributos.get(1), (Articulo)atributos.get(2), (Integer)atributos.get(3),(LocalDateTime)atributos.get(4)))){
+            exito = true;
+            VistaStore.mensajeCreado(exito);
+        } 
 
-            VistaStore.mensajeCreado(true);
-        } catch (ElementFound e) {
-            VistaStore.mensajeError(e.getMessage());
-        }
     }
         public void  mostrarPedidos() {
         // Crear una array temporal para recibir articulos
-        List lista = Datos.ListarPedidos();
-        // Llenar la array con los articulos
-        // Llamar a la vista para mostrar los articulos
-        VistaMuestraPedido.muestraPedidos(lista);
+        List lista = new PedidoDao(connection).getAll();
+        VistaMuestraPedido.muestraPedidos(lista);    
     }
         public void eliminarPedido() {
         int pedido=VistaEliminarPedido.solicitarPedido();
@@ -93,42 +89,39 @@ public class Controlador {
         } catch (ElementNotFound e) {
             VistaStore.mensajeError(e.getMessage());
         }
+    }     
+     
+    //GESTION CLIENTES
+        
+    public void gestionPedidos(){
+        VistaMenuPedido.imprimeMenuPedidos();
     }
     public void agregarCliente(){
         boolean exito =true;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoCliente.imprimeAgregarCliente();
-        if (atributos.get(4).equals("si")) {
-        new ClienteDao(connection).save(new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString()));
+        if (atributos.get(4).equals(true)) {
+        new ClienteDao(connection).save(new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
         } else {
         new ClienteDao(connection).save(new ClienteEstandar(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
         }
         VistaStore.mensajeCreado(exito);
     }
     public static void mostrarClientes(){
-        List lista = Datos.ListarClientesP();
-        VistaMuestraCliente.muestraClientesP(lista);
-        List lista2 = Datos.ListarClientesE();
-        VistaMuestraCliente.muestraClientesE(lista2);
+        List lista = new ClienteDao(connection).getAll();
+        VistaMuestraCliente.muestraClientes(lista);
     }    
     public static void mostrarClientesP(){
-        List lista = Datos.ListarClientesP();
+        List lista = new ClienteDao(connection).getAllPremium();
         VistaMuestraCliente.muestraClientesP(lista);
     }
     public static void mostrarClientesE(){
-        List lista = Datos.ListarClientesE();
+        List lista = new ClienteDao(connection).getAllEstandar();
         VistaMuestraCliente.muestraClientesE(lista);
     }
-    
-    public void gestionPedidos(){
-        VistaMenuPedido.imprimeMenuPedidos();
-    }
-    public static ClientePremium recuperarCliente(String email){
-        ClientePremium cliente=Datos.recuperarClientePremium(email);
-        return cliente;
-    }
-    public static ClienteEstandar recuperarClienteE(String email){
-        ClienteEstandar cliente=Datos.recuperarClienteEstandar(email);
+
+    public static Cliente recuperarCliente(String email){
+        Cliente cliente= new ClienteDao(connection).get(email);
         return cliente;
     }
 }
