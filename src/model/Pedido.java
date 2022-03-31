@@ -70,7 +70,7 @@ protected LocalDateTime fecha;
     }
     
     public void setFecha(LocalDateTime fecha) {
-        this.fecha = LocalDateTime.now();
+        this.fecha = fecha;
     }
 
     
