@@ -9,12 +9,12 @@ import java.util.Optional;
  */
 public interface Dao<T, R> {
     
-    T get(R id);
+    T get(R id) throws ElementNotFound;
     
-    List<T> getAll();
+    List<T> getAll() throws ElementNotFound;
     
-    boolean save(T t);
+    boolean save(T t) throws ElementFound;
         
-    void delete(T t);
+    void delete(R t) throws ElementNotFound;
     
 }

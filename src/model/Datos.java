@@ -38,24 +38,6 @@ public class Datos {
         return BaseDatos.existeArticulo(articulo);
     }
     
-    public static boolean introducirCliente(List<Object> atributos){
-       
-        
-        boolean resultado= Boolean.valueOf((Boolean)atributos.get(4));
-        //Si el cliente es premium
-        if(resultado = true){
-            ClientePremium clienteP = new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString());
-            BaseDatos.AgregarClientePremium(clienteP);
-        //si el cliente es estandar
-        }else{
-             if(resultado = false){
-            ClienteEstandar clienteE = new ClienteEstandar(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4));
-            BaseDatos.AgregarClienteEstandar(clienteE);
-        }    
-    }
-        //devuelve true si comprueba que el Cliente esta en la base de datos
-        return true;
- }
     public static void introducirPedido(List<Object> atributos) throws ElementFound{
         
         Pedido pedido = new Pedido((Integer)atributos.get(0), (Cliente)atributos.get(1), (Articulo)atributos.get(2), (Integer)atributos.get(3),(LocalDateTime)atributos.get(4));

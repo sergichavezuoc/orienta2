@@ -31,7 +31,7 @@ public class PedidoDao implements Dao<Pedido, Long> {
         return null;
     }
     @Override
-    public Pedido get(Long id) {
+    public Pedido get(Long id) throws ElementNotFound {
         
         try (PreparedStatement stmt = conn
                 .prepareStatement("SELECT * FROM pedido WHERE id = ?")) {
@@ -48,11 +48,11 @@ public class PedidoDao implements Dao<Pedido, Long> {
 
   
     @Override
-    public List<Pedido> getAll() {
+    public List<Pedido> getAll() throws ElementNotFound {
       ArrayList<Pedido> pedidos = new ArrayList<>();
       
       try{
-          PreparedStatement stmt = conn.prepareStatement("SELECT numPedido, nif, numArticulo, cantidad, CONCAT(fecha,hora) AS fechaHora FROM pedido");
+          PreparedStatement stmt = conn.prepareStatement("SELECT numPedido, cliente, articulo, cantidad, CONCAT(fecha,hora) AS fechaHora FROM pedido");
           ResultSet result = stmt.executeQuery();
           while(result.next()){
               Pedido buildPedido = buildPedido(result);
@@ -89,18 +89,24 @@ public class PedidoDao implements Dao<Pedido, Long> {
     }
 
     @Override
-    public void delete(Pedido t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Long numPedido) throws ElementNotFound {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM pedido WHERE numPedido=?");
+            stmt.setLong(1, numPedido);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new ElementNotFound("No se ha podido encontrar el pedido a eliminar");
+        }
     }
-    private Pedido buildPedido(ResultSet result) throws SQLException {
+    private Pedido buildPedido(ResultSet result) throws SQLException, ElementNotFound {
         Pedido pedido= new Pedido();
         Articulo articulo;
         Cliente cliente;
         
-        articulo = new ArticuloDao(conn).get(result.getLong("numArticulo"));
+        articulo = new ArticuloDao(conn).get(result.getLong("articulo"));
         pedido.setArticulo(articulo);
         pedido.setCantidad(result.getInt("cantidad"));
-        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numArticulo"));
+        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("articulo"));
         pedido.setCliente(cliente);   
         String str = result.getString("fechaHora");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");

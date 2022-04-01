@@ -26,7 +26,7 @@ public class ArticuloDao implements Dao<Articulo, Long> {
     }
     
     @Override
-    public Articulo get(Long id) {
+    public Articulo get(Long id) throws ElementNotFound {
         Articulo articulo =null;
         try (PreparedStatement stmt = conn
                 .prepareStatement("SELECT * FROM articulo WHERE numArticulo = ?")) {
@@ -38,9 +38,12 @@ public class ArticuloDao implements Dao<Articulo, Long> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (articulo == null) {
+            throw new ElementNotFound("No se ha podido encontrar el articulo introducido");
+        }
         return articulo;
     }
-    public Articulo getArticulo(String nombre){
+    public Articulo getArticulo(String nombre) throws ElementNotFound {
          Articulo articulo=null;
         try{
             PreparedStatement stmt =conn.prepareStatement("SELECT * FROM articulo WHERE descripcion = ?");
@@ -48,15 +51,20 @@ public class ArticuloDao implements Dao<Articulo, Long> {
             ResultSet result = stmt.executeQuery();
             if(result.next()){
                 articulo = buildArticulo(result);
+            } else {
+                throw new ElementNotFound("No se ha podido encontrar el articulo introducido");
             }
         }catch(Exception e){
             e.printStackTrace();
+        }
+        if (articulo == null) {
+            throw new ElementNotFound("No se ha podido encontrar el articulo introducido");
         }
         return articulo;
     }
    
     @Override
-    public List<Articulo> getAll() {
+    public List<Articulo> getAll() throws ElementNotFound {
         ArrayList <Articulo> articulos = new ArrayList<>();
         try{
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM articulo");
@@ -64,15 +72,18 @@ public class ArticuloDao implements Dao<Articulo, Long> {
             while(result.next()){
                 Articulo buildArticulo = buildArticulo(result);                
                 articulos.add(buildArticulo);
-            }  
+            }
         }catch(Exception e){
             e.printStackTrace();
+        }
+        if (articulos.size() == 0) {
+            throw new ElementNotFound("No se ha podido encontrar ningun articulo");
         }
         return articulos;
     }
 
     @Override
-    public boolean save(Articulo t) {
+    public boolean save(Articulo t) throws ElementFound {
         boolean exito = false;
                 try (PreparedStatement stmt = conn
                 .prepareStatement("INSERT INTO articulo (numArticulo, descripcion, precio, gastos, tiempoMinutos) VALUES (?,?,?,?,?)")) {
@@ -90,8 +101,7 @@ public class ArticuloDao implements Dao<Articulo, Long> {
     }
 
     @Override
-    
-    public void delete(Articulo t) {
+    public void delete(Long t) {
     }
     
     private Articulo buildArticulo(ResultSet result) throws SQLException {

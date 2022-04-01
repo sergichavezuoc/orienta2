@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controlador {
     
@@ -49,19 +51,34 @@ public class Controlador {
         boolean exito = true;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoArticulo.imprimeAgregarArticulo();
-        if(new ArticuloDao(connection).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4)))){
-            exito = true;
-        } 
-        VistaStore.mensajeCreado(exito);
+        try {
+            if(new ArticuloDao(connection).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4)))){
+                exito = true; 
+            }
+            VistaStore.mensajeCreado(exito);
+        } catch (ElementFound ex) {
+            VistaStore.mensajeError(ex.getMessage());
+        }
     }
 
     public static void  mostrarArticulos() throws SQLException {
-        List lista = new ArticuloDao(connection).getAll();
-        VistaMostrarArticulo.muestraArticulos(lista);
+        List lista = null;
+        try {
+            lista = new ArticuloDao(connection).getAll();
+            VistaMostrarArticulo.muestraArticulos(lista);
+        } catch (ElementNotFound ex) {
+            VistaStore.mensajeError(ex.getMessage());
+        }
     }
     public static Articulo recuperarArticulo(String nombreArticulo){
-        Articulo articulo = new ArticuloDao(connection).getArticulo(nombreArticulo);
-        return articulo;
+        Articulo articulo;
+        try {
+            articulo = new ArticuloDao(connection).getArticulo(nombreArticulo);
+            return articulo;
+        } catch (ElementNotFound ex) {
+            VistaStore.mensajeError(ex.getMessage());
+        }
+        return null;
     }
     
     //GESTION PEDIDOS
@@ -78,13 +95,18 @@ public class Controlador {
     }
         public void  mostrarPedidos() {
         // Crear una array temporal para recibir articulos
-        List lista = new PedidoDao(connection).getAll();
-        VistaMuestraPedido.muestraPedidos(lista);    
+        List lista;
+        try {
+            lista = new PedidoDao(connection).getAll();
+            VistaMuestraPedido.muestraPedidos(lista);    
+        } catch (ElementNotFound ex) {
+            VistaStore.mensajeError(ex.getMessage());
+        }
     }
         public void eliminarPedido() {
-        int pedido=VistaEliminarPedido.solicitarPedido();
+        Long pedido=VistaEliminarPedido.solicitarPedido();
         try {
-            Datos.eliminarPedido(pedido);
+            new PedidoDao(connection).delete(pedido);
             VistaStore.mensajeEliminado();
         } catch (ElementNotFound e) {
             VistaStore.mensajeError(e.getMessage());

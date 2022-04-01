@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/model/Dao.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>17</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/view/VistaMenuArticulo.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/model/ClienteDao.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/model/Dao.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/view/VistaNuevoPedido.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/model/Cliente.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/model/ArticuloDao.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/model/PedidoDao.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/controlador/Controlador.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/model/Pedido.java</file>
-            <file>file:/Users/renatasanchezpaez/SegundaOportunidad/orienta2/src/view/VistaNuevoCliente.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Dao.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Articulo.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/ArticuloDao.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/view/VistaNuevoArticulo.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Pedido.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Cliente.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/view/VistaStore.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/view/VistaNuevoPedido.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Datos.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/DatabaseConnection.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/ClienteDao.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/view/VistaEliminarPedido.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/ClienteEstandar.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/PedidoDao.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/BaseDatos.java</file>
+            <file>file:/C:/Users/jmart/Informatica/orienta2/src/controlador/Controlador.java</file>
         </group>
     </open-files>
 </project-private>

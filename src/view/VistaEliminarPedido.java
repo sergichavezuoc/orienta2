@@ -12,12 +12,12 @@ import static view.VistaStore.obtenInt;
  * @author sergichavez
  */
 public class VistaEliminarPedido {
-    public static int solicitarPedido(){
+    public static long solicitarPedido(){
       System.out.println("###########################");
       System.out.println("    ELIMINAR PEDIDO     ");
       System.out.println("###########################\n");
       System.out.println("Introduce el un nº entero del pedido a eliminar");
-      int pedido = obtenInt();
+      Long pedido = (long) obtenInt();
       return pedido;
    }   
 }

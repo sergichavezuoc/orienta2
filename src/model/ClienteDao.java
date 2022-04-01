@@ -120,7 +120,7 @@ public class ClienteDao implements Dao<Cliente, String> {
     }
 
     @Override
-    public void delete(Cliente t) {
+    public void delete(String t) {
     }
     
     private Cliente buildCliente(ResultSet result) throws SQLException {
