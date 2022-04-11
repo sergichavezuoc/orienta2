@@ -29,7 +29,7 @@ public class ClienteDao implements Dao<Cliente, String> {
             stmt.setString(1, email);
             ResultSet result = stmt.executeQuery();
             if(result.next()){
-                cliente = buildClienteP(result);
+                cliente = FactoryCliente.getCliente(result.getInt("premium"),result);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class ClienteDao implements Dao<Cliente, String> {
             stmt.setInt(1, numArticulo);
             ResultSet result = stmt.executeQuery();
             if(result.next()){
-                cliente = buildClienteP(result);
+                cliente = FactoryCliente.getCliente(result.getInt("premium"),result);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -60,8 +60,9 @@ public class ClienteDao implements Dao<Cliente, String> {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cliente");
             ResultSet result = stmt.executeQuery();
             while(result.next()){
-                Cliente buildCliente = buildCliente(result);
-                clientes.add(buildCliente);
+                Cliente cliente = FactoryCliente.getCliente(result.getInt("premium"),result);
+
+                clientes.add(cliente);
             }   
         }catch(Exception e){
             e.printStackTrace();

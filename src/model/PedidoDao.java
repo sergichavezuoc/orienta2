@@ -52,7 +52,7 @@ public class PedidoDao implements Dao<Pedido, Long> {
       ArrayList<Pedido> pedidos = new ArrayList<>();
       
       try{
-          PreparedStatement stmt = conn.prepareStatement("SELECT numPedido, cliente, articulo, cantidad, CONCAT(fecha,hora) AS fechaHora FROM pedido");
+          PreparedStatement stmt = conn.prepareStatement("SELECT numPedido, nif, numArticulo, cantidad, CONCAT(fecha,hora) AS fechaHora FROM pedido");
           ResultSet result = stmt.executeQuery();
           while(result.next()){
               Pedido buildPedido = buildPedido(result);
@@ -103,10 +103,10 @@ public class PedidoDao implements Dao<Pedido, Long> {
         Articulo articulo;
         Cliente cliente;
         
-        articulo = new ArticuloDao(conn).get(result.getLong("articulo"));
+        articulo = new ArticuloDao(conn).get(result.getLong("numArticulo"));
         pedido.setArticulo(articulo);
         pedido.setCantidad(result.getInt("cantidad"));
-        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("articulo"));
+        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numArticulo"));
         pedido.setCliente(cliente);   
         String str = result.getString("fechaHora");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
