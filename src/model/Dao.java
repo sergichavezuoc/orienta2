@@ -15,6 +15,6 @@ public interface Dao<T, R> {
     
     boolean save(T t) throws ElementFound;
         
-    void delete(R t) throws ElementNotFound;
+    boolean delete(R t) throws ElementNotFound;
     
 }

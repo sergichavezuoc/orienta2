@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.time.LocalDateTime;
 import static view.VistaStore.obtenInt;
 
 /**

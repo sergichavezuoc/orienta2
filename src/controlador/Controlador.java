@@ -15,25 +15,15 @@ import java.util.logging.Logger;
 public class Controlador {
     
     private  static VistaStore view;
-    private static Datos controlerModel;
-    private  int opcion = 0;
     private  static Connection connection;
 
     public Controlador() {
         try {
             this.connection = DatabaseConnection.createConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM cliente");
-            ResultSet res = stmt.executeQuery();
-            res.next();
-            System.out.println(res.getString("nombre"));
-            
+         
         } catch (SQLException e) {
             // TODO crear vista con System.out.println("Ha habido problema en la conexión");
         }
-    }
-    
-    public void cargarDatos() {
-        Datos.cargarDatos();
     }
     
     public void  mostrarMenuPrincipal() throws Exception{
@@ -46,16 +36,14 @@ public class Controlador {
         VistaMenuArticulo.imprimeMenuArticulos();
     }
 
-
     public void agregarArticulo() {
         boolean exito = true;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoArticulo.imprimeAgregarArticulo();
         try {
             if(new ArticuloDao(connection).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4)))){
-                exito = true; 
-            }
-            VistaStore.mensajeCreado(exito);
+               VistaStore.mensajeCreado(exito);
+            }        
         } catch (ElementFound ex) {
             VistaStore.mensajeError(ex.getMessage());
         }
@@ -70,6 +58,7 @@ public class Controlador {
             VistaStore.mensajeError(ex.getMessage());
         }
     }
+    
     public static Articulo recuperarArticulo(String nombreArticulo){
         Articulo articulo;
         try {
@@ -83,6 +72,10 @@ public class Controlador {
     
     //GESTION PEDIDOS
     
+    public void gestionPedidos(){
+        VistaMenuPedido.imprimeMenuPedidos();
+    }
+    
     public void agregarPedido() {
         boolean exito;    
         List<Object> atributos = new ArrayList<Object>();
@@ -93,8 +86,8 @@ public class Controlador {
         } 
 
     }
-        public void  mostrarPedidos() {
-        // Crear una array temporal para recibir articulos
+    
+    public void  mostrarPedidos() {
         List lista;
         try {
             lista = new PedidoDao(connection).getAll();
@@ -103,11 +96,15 @@ public class Controlador {
             VistaStore.mensajeError(ex.getMessage());
         }
     }
-        public void eliminarPedido() {
-        Long pedido=VistaEliminarPedido.solicitarPedido();
+        
+    public void eliminarPedido() {
+        Long pedido = VistaEliminarPedido.solicitarPedido();
+        boolean exito =false;
         try {
-            new PedidoDao(connection).delete(pedido);
-            VistaStore.mensajeEliminado();
+            exito = new PedidoDao(connection).delete(pedido);
+            if (exito){
+                VistaStore.mensajeEliminado();
+            }
         } catch (ElementNotFound e) {
             VistaStore.mensajeError(e.getMessage());
         }
@@ -115,28 +112,34 @@ public class Controlador {
      
     //GESTION CLIENTES
         
-    public void gestionPedidos(){
-        VistaMenuPedido.imprimeMenuPedidos();
+    public  static void gestionClientes() throws SQLException {
+        VistaMenuCliente.imprimeMenuClientes();
     }
+    
     public void agregarCliente(){
-        boolean exito =true;
+        boolean exito;
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoCliente.imprimeAgregarCliente();
         if (atributos.get(4).equals(true)) {
-        new ClienteDao(connection).save(new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
+        exito = new ClienteDao(connection).save(new ClientePremium(atributos.get(0).toString(), atributos.get(1).toString() , 
+                atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
         } else {
-        new ClienteDao(connection).save(new ClienteEstandar(atributos.get(0).toString(), atributos.get(1).toString() , atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
+        exito = new ClienteDao(connection).save(new ClienteEstandar(atributos.get(0).toString(), atributos.get(1).toString() ,
+                atributos.get(2).toString(), atributos.get(3).toString(), (Boolean)atributos.get(4)));
         }
         VistaStore.mensajeCreado(exito);
     }
+    
     public static void mostrarClientes(){
         List lista = new ClienteDao(connection).getAll();
         VistaMuestraCliente.muestraClientes(lista);
     }    
+    
     public static void mostrarClientesP(){
         List lista = new ClienteDao(connection).getAllPremium();
         VistaMuestraCliente.muestraClientesP(lista);
     }
+    
     public static void mostrarClientesE(){
         List lista = new ClienteDao(connection).getAllEstandar();
         VistaMuestraCliente.muestraClientesE(lista);

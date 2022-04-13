@@ -72,16 +72,18 @@ public class PedidoDao implements Dao<Pedido, Long> {
         boolean exito = false;
         
         try (
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO pedido (numPedido, nif, numArticulo, cantidad, fecha, hora) VALUES (?,?,?,?,?,?)")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO pedido (numPedido, nif, numArticulo, cantidad, fecha, hora) "
+                    + "VALUES (?,?,?,?,?,?)")) {
             stmt.setLong(1, t.numPedido);
             stmt.setString(2, t.cliente.getNif());
             stmt.setInt(3, t.articulo.getNumArticulo());
             stmt.setInt(4, t.cantidad);
             stmt.setString(5, fecha.format(isoFecha));
             stmt.setString(6, fecha.format(isoHora));          
-            stmt.executeUpdate();
-            exito =true;
-            
+            int afectadas = stmt.executeUpdate();
+           if(afectadas >0){
+               exito = true;
+           }
         } catch (Exception e) {
             e.printStackTrace();
         }  
@@ -89,31 +91,38 @@ public class PedidoDao implements Dao<Pedido, Long> {
     }
 
     @Override
-    public void delete(Long numPedido) throws ElementNotFound {
+    public boolean delete(Long numPedido) throws ElementNotFound {
+        boolean exito = false;
         try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM pedido WHERE numPedido=?");
+            PreparedStatement stmt = conn.prepareStatement("DELETE pedido FROM pedido, articulo WHERE pedido.numArticulo=articulo.numArticulo AND numPedido=? AND TIMESTAMPDIFF(MINUTE,CONCAT(pedido.fecha,' ',pedido.hora), NOW()) < articulo.tiempoMinutos");
             stmt.setLong(1, numPedido);
-            stmt.executeUpdate();
+            int afectadas = stmt.executeUpdate();
+            if(afectadas ==0){
+                exito = false;
+            }else{
+                exito = true;
+            }
         } catch (SQLException e) {
             throw new ElementNotFound("No se ha podido encontrar el pedido a eliminar");
         }
+        return exito;
     }
     private Pedido buildPedido(ResultSet result) throws SQLException, ElementNotFound {
-        Pedido pedido= new Pedido();
+        Pedido pedido;
         Articulo articulo;
         Cliente cliente;
         
         articulo = new ArticuloDao(conn).get(result.getLong("numArticulo"));
-        pedido.setArticulo(articulo);
-        pedido.setCantidad(result.getInt("cantidad"));
-        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numArticulo"));
-        pedido.setCliente(cliente);   
+        int cantidad = result.getInt("cantidad"); 
+        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numPedido"));  
+        System.out.println(cliente);
         String str = result.getString("fechaHora");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
         LocalDateTime LDT = LocalDateTime.parse(str, formatter);
-        pedido.setFecha(LDT);
-        pedido.setNumPedido(result.getInt("numPedido"));
+        int numPedido = result.getInt("numPedido");
+        pedido = new Pedido (numPedido, cliente, articulo, cantidad, LDT);
+        System.out.println(pedido);
         return pedido;
-        
+          
     }
 }

@@ -92,7 +92,12 @@ public class ArticuloDao implements Dao<Articulo, Long> {
             stmt.setInt(3, t.precio);
             stmt.setInt(4, t.gastos);
             stmt.setInt(5, t.tiempoMinutos);
-            stmt.executeUpdate();
+            int afectadas = stmt.executeUpdate();
+            if(afectadas ==0){
+                exito=false;
+            }else{
+                exito =true;
+            }
             exito = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,7 +106,8 @@ public class ArticuloDao implements Dao<Articulo, Long> {
     }
 
     @Override
-    public void delete(Long t) {
+    public boolean delete(Long t) {
+        return false;
     }
     
     private Articulo buildArticulo(ResultSet result) throws SQLException {

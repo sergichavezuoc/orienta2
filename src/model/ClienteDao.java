@@ -36,11 +36,12 @@ public class ClienteDao implements Dao<Cliente, String> {
         }
         return cliente;
     }
-    public Cliente getBy(String nif, int numArticulo) {
+    public Cliente getBy(String nif, int numPedido) {
         Cliente cliente = null;
-        try (PreparedStatement stmt = conn.prepareStatement("SELECT nombre, domicilio, cliente.nif, email, premium FROM cliente INNER JOIN pedido WHERE pedido.nif= cliente.nif AND numPedido=?;")){
+        try (PreparedStatement stmt = conn.prepareStatement("SELECT nombre, domicilio, cliente.nif, email, premium "
+                + "FROM cliente INNER JOIN pedido ON cliente.nif = pedido.nif WHERE pedido.nif= ? AND numPedido=?;")){
             stmt.setString(1, nif);
-            stmt.setInt(1, numArticulo);
+            stmt.setInt(2, numPedido);
             ResultSet result = stmt.executeQuery();
             if(result.next()){
                 cliente = FactoryCliente.getCliente(result.getInt("premium"),result);
@@ -61,7 +62,6 @@ public class ClienteDao implements Dao<Cliente, String> {
             ResultSet result = stmt.executeQuery();
             while(result.next()){
                 Cliente cliente = FactoryCliente.getCliente(result.getInt("premium"),result);
-
                 clientes.add(cliente);
             }   
         }catch(Exception e){
@@ -121,24 +121,12 @@ public class ClienteDao implements Dao<Cliente, String> {
     }
 
     @Override
-    public void delete(String t) {
-    }
-    
-    private Cliente buildCliente(ResultSet result) throws SQLException {
-        
-        Cliente cliente = new ClienteEstandar();
-        cliente.setNombre(result.getString("nombre"));
-        cliente.setDomicilio(result.getString("domicilio"));
-        cliente.setNif(result.getString("nif"));
-        cliente.setEmail(result.getString("email"));
-        cliente.setPremium(result.getBoolean("premium"));
-        
-        return cliente;
-    }
-    
+    public boolean delete(String t) {
+        return false;
+    } 
     
     private ClienteEstandar buildClienteE(ResultSet result) throws SQLException {
-        int estandar = result.getInt("premium");
+        
         ClienteEstandar clienteE = new ClienteEstandar();
         clienteE.setNombre(result.getString("nombre"));
         clienteE.setDomicilio(result.getString("domicilio"));
@@ -149,7 +137,7 @@ public class ClienteDao implements Dao<Cliente, String> {
         return clienteE;
     }
     private ClientePremium buildClienteP(ResultSet result) throws SQLException {
-        int premium = result.getInt("Premium");
+        
         ClientePremium clienteP = new ClientePremium();
         clienteP.setNombre(result.getString("nombre"));
         clienteP.setDomicilio(result.getString("domicilio"));

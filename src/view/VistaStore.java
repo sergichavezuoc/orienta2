@@ -46,7 +46,7 @@ public class VistaStore {
                 case 1: controlador.gestionArticulos();
                     ;
                     break;
-                case 2: VistaMenuCliente.gestionClientes();
+                case 2: controlador.gestionClientes();
                     ;
                     break;
                 case 3: controlador.gestionPedidos();
@@ -58,10 +58,6 @@ public class VistaStore {
         } while (!salir);
     }
    
-   //ARTICULOS
-   
-  
- 
  
    public static void mensajeCreado(boolean exito){
        if (exito) {

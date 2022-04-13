@@ -22,7 +22,7 @@ import static view.VistaStore.obtenString;
  */
 public class VistaNuevoPedido {
        public static List imprimeAgregarPedido(){
-       //int numArticulo, String descripcion, int precio, int gastos, int tiempoMinutos
+       
        int numPedido, cantidad;
        Cliente cliente;
        String nif, nombreArticulo;
