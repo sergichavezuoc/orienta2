@@ -102,8 +102,10 @@ public class Controlador {
         boolean exito =false;
         try {
             exito = new PedidoDao(connection).delete(pedido);
-            if (exito){
+            if (exito==true){
                 VistaStore.mensajeEliminado();
+            }else{
+                VistaStore.mensajeError("No se ha podido eliminar");
             }
         } catch (ElementNotFound e) {
             VistaStore.mensajeError(e.getMessage());

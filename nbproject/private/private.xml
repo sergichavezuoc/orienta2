@@ -12,22 +12,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Dao.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Articulo.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/ArticuloDao.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/view/VistaNuevoArticulo.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Pedido.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Cliente.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/view/VistaStore.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/view/VistaNuevoPedido.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/Datos.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/DatabaseConnection.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/ClienteDao.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/view/VistaEliminarPedido.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/ClienteEstandar.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/PedidoDao.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/model/BaseDatos.java</file>
-            <file>file:/C:/Users/jmart/Informatica/orienta2/src/controlador/Controlador.java</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/model/PedidoDao.java</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/view/VistaStore.java</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/controlador/OnlineStore.java</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/controlador/Controlador.java</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/view/VistaEliminarPedido.java</file>
         </group>
     </open-files>
 </project-private>
