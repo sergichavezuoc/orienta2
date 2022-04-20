@@ -13,10 +13,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/model/PedidoDao.java</file>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/view/VistaStore.java</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/ConexionConf.java</file>
             <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/controlador/OnlineStore.java</file>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/controlador/Controlador.java</file>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/view/VistaEliminarPedido.java</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/persistencia/articulo.hbm.xml</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/hibernate.cfg.xml</file>
+            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/model/DatabaseConnection.java</file>
         </group>
     </open-files>
 </project-private>

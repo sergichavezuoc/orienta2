@@ -10,7 +10,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-
+import org.hibernate.MappingException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -20,6 +25,10 @@ public class ArticuloDao implements Dao<Articulo, Long> {
         
     Connection conn;
     DefaultTableModel DT;
+    Configuration configuration = new Configuration().configure();
+    SessionFactory sessionFactory = configuration.buildSessionFactory();
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.getTransaction();
     
     public ArticuloDao(Connection conn) {
         this.conn = conn;
@@ -28,13 +37,10 @@ public class ArticuloDao implements Dao<Articulo, Long> {
     @Override
     public Articulo get(Long id) throws ElementNotFound {
         Articulo articulo =null;
-        try (PreparedStatement stmt = conn
-                .prepareStatement("SELECT * FROM articulo WHERE numArticulo = ?")) {
-            stmt.setLong(1, id);
-            ResultSet result = stmt.executeQuery();
-            if (result.next()) {
-                articulo = buildArticulo(result);
-            }
+        try {
+            Query query = session.createQuery("from Articulo WHERE numArticulo= :id");
+            query.setParameter("id", id);
+            articulo = (Articulo)query.uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,15 +51,18 @@ public class ArticuloDao implements Dao<Articulo, Long> {
     }
     public Articulo getArticulo(String nombre) throws ElementNotFound {
          Articulo articulo=null;
+         
         try{
-            PreparedStatement stmt =conn.prepareStatement("SELECT * FROM articulo WHERE descripcion = ?");
-            stmt.setString(1, nombre);
-            ResultSet result = stmt.executeQuery();
+            Query query = session.createQuery("from Articulo WHERE descripcion= :nombre");
+            query.setParameter("nombre", nombre);
+            articulo = (Articulo)query.uniqueResult();
+            
+            /*
             if(result.next()){
                 articulo = buildArticulo(result);
             } else {
                 throw new ElementNotFound("No se ha podido encontrar el articulo introducido");
-            }
+            }*/
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -67,11 +76,10 @@ public class ArticuloDao implements Dao<Articulo, Long> {
     public List<Articulo> getAll() throws ElementNotFound {
         ArrayList <Articulo> articulos = new ArrayList<>();
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM articulo");
-            ResultSet result = stmt.executeQuery();
-            while(result.next()){
-                Articulo buildArticulo = buildArticulo(result);                
-                articulos.add(buildArticulo);
+            Query query = session.createQuery("from Articulo");
+            List<Articulo> empList = query.list();
+            for(Articulo articulo:empList){
+                articulos.add(articulo);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -84,23 +92,21 @@ public class ArticuloDao implements Dao<Articulo, Long> {
 
     @Override
     public boolean save(Articulo t) throws ElementFound {
-        boolean exito = false;
-                try (PreparedStatement stmt = conn
-                .prepareStatement("INSERT INTO articulo (numArticulo, descripcion, precio, gastos, tiempoMinutos) VALUES (?,?,?,?,?)")) {
-            stmt.setInt(1, t.numArticulo);
-            stmt.setString(2, t.descripcion);
-            stmt.setInt(3, t.precio);
-            stmt.setInt(4, t.gastos);
-            stmt.setInt(5, t.tiempoMinutos);
-            int afectadas = stmt.executeUpdate();
-            if(afectadas ==0){
-                exito=false;
-            }else{
-                exito =true;
-            }
-            exito = true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean exito = false;     
+        try{
+            tx=session.getTransaction();
+            tx.begin();    
+            Articulo articulo = new Articulo();
+            articulo.setDescripcion(t.descripcion);
+            articulo.setGastos(t.gastos);
+            articulo.setNumArticulo(t.numArticulo);
+            articulo.setPrecio(t.precio);
+            articulo.setTiempoMinutos(t.tiempoMinutos);
+            session.saveOrUpdate(articulo);
+            tx.commit();
+            exito =true;
+        }catch(RuntimeException e){
+            throw e;
         }
         return exito;
     }
@@ -115,7 +121,7 @@ public class ArticuloDao implements Dao<Articulo, Long> {
         articulo = new Articulo();
       
         // si llega aquÃ­ es porque no ha petado y devuelto SQLException
-        articulo.setNumArticulo(result.getInt("numArticulo"));
+        articulo.setNumArticulo(result.getLong("numArticulo"));
         articulo.setDescripcion(result.getString("descripcion"));
         articulo.setPrecio(result.getInt("precio"));
         articulo.setGastos(result.getInt("gastos"));

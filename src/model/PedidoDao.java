@@ -76,7 +76,7 @@ public class PedidoDao implements Dao<Pedido, Long> {
                     + "VALUES (?,?,?,?,?,?)")) {
             stmt.setLong(1, t.numPedido);
             stmt.setString(2, t.cliente.getNif());
-            stmt.setInt(3, t.articulo.getNumArticulo());
+            stmt.setLong(3, t.articulo.getNumArticulo());
             stmt.setInt(4, t.cantidad);
             stmt.setString(5, fecha.format(isoFecha));
             stmt.setString(6, fecha.format(isoHora));          
@@ -114,14 +114,12 @@ public class PedidoDao implements Dao<Pedido, Long> {
         
         articulo = new ArticuloDao(conn).get(result.getLong("numArticulo"));
         int cantidad = result.getInt("cantidad"); 
-        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numPedido"));  
-        System.out.println(cliente);
+        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numPedido"));     
         String str = result.getString("fechaHora");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
         LocalDateTime LDT = LocalDateTime.parse(str, formatter);
         int numPedido = result.getInt("numPedido");
         pedido = new Pedido (numPedido, cliente, articulo, cantidad, LDT);
-        System.out.println(pedido);
         return pedido;
           
     }

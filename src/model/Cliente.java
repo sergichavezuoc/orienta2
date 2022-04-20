@@ -16,7 +16,11 @@ public abstract class Cliente {
  protected String nif;
  protected String email;
  protected boolean premium;
-       
+     
+    public Cliente(){
+        
+    }
+    
     public Cliente(String nombre, String domicilio, String nif, String email,boolean premium) {
         this.nombre = nombre;
         this.domicilio = domicilio;

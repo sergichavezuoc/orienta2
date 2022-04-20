@@ -41,7 +41,7 @@ public class Controlador {
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoArticulo.imprimeAgregarArticulo();
         try {
-            if(new ArticuloDao(connection).save(new Articulo((Integer)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4)))){
+            if(new ArticuloDao(connection).save(new Articulo((Long)atributos.get(0), atributos.get(1).toString(),(Integer)atributos.get(2), (Integer)atributos.get(3), (Integer)atributos.get(4)))){
                VistaStore.mensajeCreado(exito);
             }        
         } catch (ElementFound ex) {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.Articulo" table="articulo">
+        <id column="numArticulo" name="numArticulo" type="long"></id>
+        <property name="descripcion" type="string"><column name="descripcion" length="40"/></property>
+        <property name="precio" type="integer"><column name="precio"/></property>
+        <property name="gastos" type="integer"><column name="gastos"/></property>
+        <property name="tiempoMinutos" type="integer"><column name="tiempoMinutos"/></property>
+    </class>
+</hibernate-mapping>

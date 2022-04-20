@@ -5,14 +5,15 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.sql.Connection;
 
 /**
  *
  * @author sergichavez
  */
-public class Articulo {
-  protected int numArticulo;
+public class Articulo implements Serializable{
+  protected Long numArticulo;
   protected String descripcion;
   protected int precio;
   protected int gastos;
@@ -22,7 +23,7 @@ public class Articulo {
         
     }
   
-    public Articulo(int numArticulo, String descripcion, int precio, int gastos, int tiempoMinutos) {
+    public Articulo(Long numArticulo, String descripcion, int precio, int gastos, int tiempoMinutos) {
         this.numArticulo = numArticulo;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -30,11 +31,11 @@ public class Articulo {
         this.tiempoMinutos = tiempoMinutos;
     }
 
-    public int getNumArticulo() {
+    public Long getNumArticulo() {
         return numArticulo;
     }
 
-    public void setNumArticulo(int numArticulo) {
+    public void setNumArticulo(Long numArticulo) {
         this.numArticulo = numArticulo;
     }
 
