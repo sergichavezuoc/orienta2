@@ -10,6 +10,13 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Cliente;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.MappingException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 /**
  *
  * @author maria
@@ -17,107 +24,60 @@ import model.Cliente;
 public class ClienteDao implements Dao<Cliente, String> {
     
     Connection conn;
+    DefaultTableModel DT;
+    Configuration configuration = new Configuration().configure();
+    SessionFactory sessionFactory = configuration.buildSessionFactory();
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.getTransaction();
     
     public ClienteDao(Connection conn) {
         this.conn = conn;
     }
     
     @Override
-    public Cliente get(String email) {
+    public Cliente get(String email) throws ElementNotFound {
         Cliente cliente = null;
-        try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cliente WHERE email = ?")){
-            stmt.setString(1, email);
-            ResultSet result = stmt.executeQuery();
-            if(result.next()){
-                cliente = FactoryCliente.getCliente(result.getInt("premium"),result);
-            }
-        }catch(Exception e){
+        try {
+            Query query = session.createQuery("from Cliente WHERE email= :email");
+            query.setParameter("email", email);
+            cliente = (Cliente)query.uniqueResult();
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (cliente == null) {
+            throw new ElementNotFound("No se ha podido encontrar el articulo introducido");
         }
         return cliente;
     }
     public Cliente getBy(String nif, int numPedido) {
-        Cliente cliente = null;
-        try (PreparedStatement stmt = conn.prepareStatement("SELECT nombre, domicilio, cliente.nif, email, premium "
-                + "FROM cliente INNER JOIN pedido ON cliente.nif = pedido.nif WHERE pedido.nif= ? AND numPedido=?;")){
-            stmt.setString(1, nif);
-            stmt.setInt(2, numPedido);
-            ResultSet result = stmt.executeQuery();
-            if(result.next()){
-                cliente = FactoryCliente.getCliente(result.getInt("premium"),result);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return cliente;
+        Query query = session.createQuery("from Cliente WHERE nif= :nif");
+            query.setParameter("nif", nif);
+                return (Cliente)query.uniqueResult();
     }
    
     
     @Override
     public List<Cliente> getAll() {
-        ArrayList <Cliente> clientes = new ArrayList<>();
+    
+       Query query = session.createQuery("from Cliente");
+        return new ArrayList<Cliente>(query.list());
         
-        try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cliente");
-            ResultSet result = stmt.executeQuery();
-            while(result.next()){
-                Cliente cliente = FactoryCliente.getCliente(result.getInt("premium"),result);
-                clientes.add(cliente);
-            }   
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return clientes;
     }
     
     public List<ClientePremium> getAllPremium() {
-        ArrayList <ClientePremium> clientesP = new ArrayList<>();
-        
-        try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cliente WHERE premium=true");
-            ResultSet result = stmt.executeQuery();
-            while(result.next()){
-                ClientePremium buildClienteP = buildClienteP(result);
-                clientesP.add(buildClienteP);
-            }   
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return clientesP;
+       Query query = session.createQuery("from Cliente WHERE premium=true");
+       return new ArrayList<ClientePremium>(query.list());
     }
     
     public List<ClienteEstandar> getAllEstandar() {
-        ArrayList <ClienteEstandar> clientesE = new ArrayList<>();
-        
-        try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cliente WHERE premium=false");
-            ResultSet result = stmt.executeQuery();
-            while(result.next()){
-                ClienteEstandar buildClienteE = buildClienteE(result);
-                clientesE.add(buildClienteE);
-            }   
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return clientesE;
+       Query query = session.createQuery("from Cliente WHERE premium=false");
+       return new ArrayList<ClienteEstandar>(query.list());    
     }
 
     @Override
     public boolean save(Cliente t) {
-        boolean exito = false;
-        try (PreparedStatement stmt = conn
-                .prepareStatement("INSERT INTO cliente (nombre,domicilio,nif,email,premium) VALUES (?,?,?,?,?)")) {
-            stmt.setString(1, t.nombre);
-            stmt.setString(2, t.domicilio);
-            stmt.setString(3, t.nif);
-            stmt.setString(4, t.email);
-            stmt.setBoolean(5, t.premium); 
-            stmt.executeUpdate();
-            exito =true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return exito;
+      session.save(t);
+        return true;
     }
 
     @Override
@@ -125,7 +85,7 @@ public class ClienteDao implements Dao<Cliente, String> {
         return false;
     } 
     
-    private ClienteEstandar buildClienteE(ResultSet result) throws SQLException {
+    /*private ClienteEstandar buildClienteE(ResultSet result) throws SQLException {
         
         ClienteEstandar clienteE = new ClienteEstandar();
         clienteE.setNombre(result.getString("nombre"));
@@ -147,6 +107,6 @@ public class ClienteDao implements Dao<Cliente, String> {
         
         return clienteP;
     }
-    
+    */
 }
 

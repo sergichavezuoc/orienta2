@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/model/Dao.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>17</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/model/PedidoDao.java</file>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/ConexionConf.java</file>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/controlador/OnlineStore.java</file>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/persistencia/articulo.hbm.xml</file>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/hibernate.cfg.xml</file>
-            <file>file:/Users/renatasanchezpaez/Orienta2revisar/orienta2/src/model/DatabaseConnection.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/model/ArticuloDao.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/model/Cliente.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/model/ClienteDao.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/model/ElementNotFound.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/controlador/Controlador.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/model/Dao.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/model/BaseDatos.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/hibernate.cfg.xml</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/model/PedidoDao.java</file>
+            <file>file:/G:/Mi%20unidad/UOC/P5%20Programación%20orientenda%20a%20objetos%20con%20BBDD/orienta2/src/articulo.hbm.xml</file>
         </group>
     </open-files>
 </project-private>

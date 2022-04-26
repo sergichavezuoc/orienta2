@@ -7,7 +7,7 @@
     <property name="connection.username">java</property>
     <property name="connection.password">1234</property>
     <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.show_sql">false</property>
     <mapping resource="articulo.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

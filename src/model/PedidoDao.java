@@ -13,6 +13,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.MappingException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 
 
@@ -22,6 +29,11 @@ import java.util.List;
  */
 public class PedidoDao implements Dao<Pedido, Long> {
     Connection conn;
+    DefaultTableModel DT;
+    Configuration configuration = new Configuration().configure();
+    SessionFactory sessionFactory = configuration.buildSessionFactory();
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.getTransaction();
     
     public PedidoDao(Connection conn) {
         this.conn = conn;
@@ -91,21 +103,12 @@ public class PedidoDao implements Dao<Pedido, Long> {
     }
 
     @Override
-    public boolean delete(Long numPedido) throws ElementNotFound {
-        boolean exito = false;
-        try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE pedido FROM pedido, articulo WHERE pedido.numArticulo=articulo.numArticulo AND numPedido=? AND TIMESTAMPDIFF(MINUTE,CONCAT(pedido.fecha,' ',pedido.hora), NOW()) < articulo.tiempoMinutos");
-            stmt.setLong(1, numPedido);
-            int afectadas = stmt.executeUpdate();
-            if(afectadas ==0){
-                exito = false;
-            }else{
-                exito = true;
-            }
-        } catch (SQLException e) {
-            throw new ElementNotFound("No se ha podido encontrar el pedido a eliminar");
-        }
-        return exito;
+    public boolean delete(Long numPedido) {
+        Query query = session.createQuery("FROM cliente where numPedido = :numPedido");
+        query.setParameter("numPedido", numPedido);
+        Cliente cliente = (Cliente)query.uniqueResult();
+      session.delete(cliente.getEmail());
+      return true;
     }
     private Pedido buildPedido(ResultSet result) throws SQLException, ElementNotFound {
         Pedido pedido;
