@@ -22,11 +22,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 
-
-/**
- *
- * @author maria
- */
 public class PedidoDao implements Dao<Pedido, Long> {
     Connection conn;
     DefaultTableModel DT;
@@ -44,16 +39,16 @@ public class PedidoDao implements Dao<Pedido, Long> {
     }
     @Override
     public Pedido get(Long id) throws ElementNotFound {
-        
-        try (PreparedStatement stmt = conn
-                .prepareStatement("SELECT * FROM pedido WHERE id = ?")) {
-            stmt.setLong(1, id);
-            ResultSet result = stmt.executeQuery();
-            if (result.next()) {
-                return buildPedido(result);
-            }
+        Pedido pedido = null;
+        try {
+            Query query = session.createQuery("from Pedido WHERE id= :numPedido");
+            query.setParameter("id", numPedido);
+            cliente = (Cliente)query.uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (pedido == null) {
+            throw new ElementNotFound("No se ha podido encontrar el pedido introducido");
         }
         return null;
     }
@@ -61,45 +56,48 @@ public class PedidoDao implements Dao<Pedido, Long> {
   
     @Override
     public List<Pedido> getAll() throws ElementNotFound {
-      ArrayList<Pedido> pedidos = new ArrayList<>();
+        Arraylist <Pedido> pedidos = new ArrayList<>();
+        try{
+            Query query = session.createQuery("from Pedido");
+            List<Pedido> empList = query.list();
+            for(Pedido pedido:empList){
+                pedidos.add(pedido);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (articulos.size() == 0) {
+            throw new ElementNotFound("No se ha podido encontrar ningun pedido");
+        }
+        return articulos; 
+    }   
       
-      try{
-          PreparedStatement stmt = conn.prepareStatement("SELECT numPedido, nif, numArticulo, cantidad, CONCAT(fecha,hora) AS fechaHora FROM pedido");
-          ResultSet result = stmt.executeQuery();
-          while(result.next()){
-              Pedido buildPedido = buildPedido(result);
-              pedidos.add(buildPedido);
-          }
-      }catch(Exception e){
-          e.printStackTrace();
-      }
-      return pedidos;
-    }
-
+      
     @Override
-    public boolean save(Pedido t) {
+    public boolean save(Pedido t)  throws ElementFound {
         LocalDateTime fecha = t.fecha;
         DateTimeFormatter isoFecha = DateTimeFormatter.ISO_LOCAL_DATE;
         DateTimeFormatter isoHora =DateTimeFormatter.ISO_LOCAL_TIME;
         boolean exito = false;
         
-        try (
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO pedido (numPedido, nif, numArticulo, cantidad, fecha, hora) "
-                    + "VALUES (?,?,?,?,?,?)")) {
-            stmt.setLong(1, t.numPedido);
-            stmt.setString(2, t.cliente.getNif());
-            stmt.setLong(3, t.articulo.getNumArticulo());
-            stmt.setInt(4, t.cantidad);
-            stmt.setString(5, fecha.format(isoFecha));
-            stmt.setString(6, fecha.format(isoHora));          
-            int afectadas = stmt.executeUpdate();
-           if(afectadas >0){
-               exito = true;
-           }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }  
-        return exito;
+        try {
+            tx=session.getTransaction();
+            tx.begin();    
+            Pedido pedido = new Pedido();
+            pedido.setLong(t.numPedido);
+            pedido.setString(t.cliente.getNif());
+            
+            pedido.setLong(t.articulo.getNumArticulo());
+            pedido.setCantidad(t.cantidad);
+            pedido.setString(t.fecha.format(isoFecha));
+            pedido.setString(t.hora.format(isoHora));
+            session.saveOrUpdate(pedido);
+            tx.commit();
+            exito =true;
+        }catch(RuntimeException e){
+            throw e;
+        }
+        return exito
     }
 
     @Override
@@ -110,12 +108,14 @@ public class PedidoDao implements Dao<Pedido, Long> {
       session.delete(cliente.getEmail());
       return true;
     }
-    private Pedido buildPedido(ResultSet result) throws SQLException, ElementNotFound {
+    
+   /* private Pedido buildPedido(ResultSet result) throws SQLException, ElementNotFound {
         Pedido pedido;
         Articulo articulo;
         Cliente cliente;
         
-        articulo = new ArticuloDao(conn).get(result.getLong("numArticulo"));
+        pedido.setNumPedido(result.getLong("numPedido"));
+        
         int cantidad = result.getInt("cantidad"); 
         cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numPedido"));     
         String str = result.getString("fechaHora");
