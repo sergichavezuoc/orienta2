@@ -2,18 +2,22 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="model.Cliente" table="cleinte">
-        <id column="email" name="email" type="string"></id>
-        <property name="nombre" type="string"><column name="nombre" length="40"/></property>
-        <property name="domicilio" type="string"><column name="domicilio"/></property>
-        <property name="nif" type="string"><column name="nif"/></property>
-        <property name="premium" type="boolean"><column name="premium"/></property>
-        <set name="pedido" table="pedido" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="cliente.nif" not-null="true" />
-            </key>
-            <one-to-many class="model.Cliente" />
+    <class name="model.Cliente" table="cliente">
+        <id column="nif" name="nif" type="string">
+            
+        </id>
+        <discriminator column="premium" type="string"/>
+        <set name="pedidos" inverse="true" cascade ="all">
+            <key column="nif"/>   
+            <one-to-many class="model.Pedido" />
         </set>
+        <property name="nombre" type="string"><column name="nombre" length="60"/></property>
+        <property name="domicilio" type="string"><column name="domicilio"/></property>
+        <property name="email" type="string"><column name="email"/></property>
+        <property name="premium" type="org.hibernate.type.NumericBooleanType" insert="false" update="false"><column name="premium" sql-type="tinyint"/></property>  
+  
+        <subclass name="model.ClienteEstandar" discriminator-value="0" extends="modelo.Cliente"></subclass>  
+        <subclass name="model.ClientePremium" discriminator-value="1" extends="modelo.Cliente"></subclass>
     </class>
     
 </hibernate-mapping>

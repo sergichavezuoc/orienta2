@@ -75,6 +75,12 @@ public class VistaStore {
        return numero;
        
    }
+   public static Long obtenLong(){
+       Scanner tecladoLong = new Scanner(System.in);
+       Long numero =0l;
+       numero =Long.parseLong(tecladoLong.nextLine());
+       return numero;
+   }
    
    public static String obtenString(){
        Scanner tecladoString = new Scanner(System.in);

@@ -8,6 +8,7 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 import static view.VistaStore.obtenInt;
+import static view.VistaStore.obtenLong;
 import static view.VistaStore.obtenString;
 
 /**
@@ -17,14 +18,15 @@ import static view.VistaStore.obtenString;
 public class VistaNuevoArticulo {
    public static List imprimeAgregarArticulo(){
        
-       int numArticulo, precio, gastos, tiempoMinutos;
+       int precio, gastos, tiempoMinutos;
+       Long numArticulo;
        String descripcion;
        List<Object> atributos = new ArrayList<Object>();
        System.out.println("###########################");
        System.out.println(" FORMULARIO NUEVO ARTICULO ");
        System.out.println("###########################");       
        System.out.println("Introduce el un nº entero correspondiente al codigo del articulo");
-       numArticulo = obtenInt();
+       numArticulo = obtenLong();
        atributos.add(numArticulo);
        System.out.println("Introduce una descripcion del articulo");
        descripcion = obtenString();

@@ -9,11 +9,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.swing.table.DefaultTableModel;
+import net.sf.ehcache.hibernate.HibernateUtil;
 import org.hibernate.MappingException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -22,6 +28,11 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 
+
+/**
+ *
+ * @author maria
+ */
 public class PedidoDao implements Dao<Pedido, Long> {
     Connection conn;
     DefaultTableModel DT;
@@ -40,90 +51,92 @@ public class PedidoDao implements Dao<Pedido, Long> {
     @Override
     public Pedido get(Long id) throws ElementNotFound {
         Pedido pedido = null;
-        try {
-            Query query = session.createQuery("from Pedido WHERE id= :numPedido");
-            query.setParameter("id", numPedido);
-            cliente = (Cliente)query.uniqueResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (pedido == null) {
-            throw new ElementNotFound("No se ha podido encontrar el pedido introducido");
-        }
-        return null;
-    }
-
-  
-    @Override
-    public List<Pedido> getAll() throws ElementNotFound {
-        Arraylist <Pedido> pedidos = new ArrayList<>();
         try{
-            Query query = session.createQuery("from Pedido");
-            List<Pedido> empList = query.list();
-            for(Pedido pedido:empList){
-                pedidos.add(pedido);
-            }
+            Query query =session.createQuery("from Pedido WHERE numPedido= :id");
+            query.setParameter("id", id);
+            pedido =(Pedido)query.uniqueResult();
         }catch(Exception e){
             e.printStackTrace();
         }
-        if (articulos.size() == 0) {
-            throw new ElementNotFound("No se ha podido encontrar ningun pedido");
+        if(pedido == null){
+            throw new ElementNotFound("No se ha podido encontrar el pedido introducido");
         }
-        return articulos; 
-    }   
-      
-      
-    @Override
-    public boolean save(Pedido t)  throws ElementFound {
-        LocalDateTime fecha = t.fecha;
-        DateTimeFormatter isoFecha = DateTimeFormatter.ISO_LOCAL_DATE;
-        DateTimeFormatter isoHora =DateTimeFormatter.ISO_LOCAL_TIME;
-        boolean exito = false;
-        
-        try {
-            tx=session.getTransaction();
-            tx.begin();    
-            Pedido pedido = new Pedido();
-            pedido.setLong(t.numPedido);
-            pedido.setString(t.cliente.getNif());
-            
-            pedido.setLong(t.articulo.getNumArticulo());
-            pedido.setCantidad(t.cantidad);
-            pedido.setString(t.fecha.format(isoFecha));
-            pedido.setString(t.hora.format(isoHora));
-            session.saveOrUpdate(pedido);
-            tx.commit();
-            exito =true;
-        }catch(RuntimeException e){
-            throw e;
-        }
-        return exito
+        return pedido;      
     }
 
     @Override
-    public boolean delete(Long numPedido) {
-        Query query = session.createQuery("FROM cliente where numPedido = :numPedido");
-        query.setParameter("numPedido", numPedido);
-        Cliente cliente = (Cliente)query.uniqueResult();
-      session.delete(cliente.getEmail());
-      return true;
+    public List<Pedido> getAll() throws ElementNotFound {
+      ArrayList <Pedido> pedidos = new ArrayList<>();
+      try{
+          Query query =session.createQuery("from Pedido");
+          List<Pedido> empList =query.list();
+          for (Pedido pedido:empList){
+              pedidos.add(pedido);
+          }        
+      }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (pedidos.size() == 0) {
+            throw new ElementNotFound("No se ha podido encontrar ningun articulo");
+        }
+        return pedidos;
     }
+
     
-   /* private Pedido buildPedido(ResultSet result) throws SQLException, ElementNotFound {
-        Pedido pedido;
-        Articulo articulo;
-        Cliente cliente;
-        
-        pedido.setNumPedido(result.getLong("numPedido"));
-        
-        int cantidad = result.getInt("cantidad"); 
-        cliente = new ClienteDao(conn).getBy(result.getString("nif"), result.getInt("numPedido"));     
-        String str = result.getString("fechaHora");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
-        LocalDateTime LDT = LocalDateTime.parse(str, formatter);
-        int numPedido = result.getInt("numPedido");
-        pedido = new Pedido (numPedido, cliente, articulo, cantidad, LDT);
-        return pedido;
-          
+    
+    @Override
+    public boolean save(Pedido t) {
+       boolean exito = false;
+       System.out.println(t.fecha);
+       System.out.println(t.numPedido);
+       try{
+           tx= session.getTransaction();
+           tx.begin();
+           Pedido pedido = new Pedido();
+           pedido.setNumPedido(t.numPedido);
+           pedido.setArticulo(t.articulo);
+           pedido.setCliente(t.cliente);
+           pedido.setFecha(t.fecha);
+           pedido.setCantidad(t.cantidad);
+           session.save(pedido);
+           System.out.println("inicio");
+           tx.commit();
+           exito =true;
+            System.out.println("medio");
+       }catch(RuntimeException e){
+           throw e;
+       }
+       System.out.println("final");
+       return exito;
     }
+
+    @Override
+    public boolean delete(Long numPedido) throws ElementNotFound {
+       boolean exito=false;
+       Pedido pedido= get(numPedido);
+       
+       LocalDateTime tmpPedido = pedido.getFecha().toLocalDateTime();
+       LocalDateTime tmpNow= Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime();
+       Long diff = ChronoUnit.MINUTES.between(tmpNow, tmpPedido); 
+       System.out.println(diff);
+       Articulo articulo = pedido.getArticulo();
+       int tmp = articulo.getTiempoMinutos();
+       Long tmptoLong =0l;
+       tmptoLong =tmptoLong.valueOf(tmp);
+       System.out.println(tmptoLong);
+        System.out.println((-diff));
+       if(tmptoLong > (-diff)){ 
+           System.out.println(numPedido);
+           Query query =session.createQuery("Delete FROM Pedido WHERE numPedido = :numPedido").setParameter("numPedido", numPedido);
+           int result =query.executeUpdate(); 
+           if(result >0){
+               exito = true;
+           }else{
+               exito =false;
+           }
+        }     
+       
+      return exito;
+    }   
+    
 }

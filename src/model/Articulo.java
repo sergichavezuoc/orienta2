@@ -7,6 +7,7 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.Set;
 
 /**
  *
@@ -18,6 +19,8 @@ public class Articulo implements Serializable{
   protected int precio;
   protected int gastos;
   protected int tiempoMinutos; 
+  protected Set <Pedido> pedidos;
+  
 
     public Articulo(){
         
@@ -69,6 +72,12 @@ public class Articulo implements Serializable{
 
     public void setTiempoMinutos(int tiempoMinutos) {
         this.tiempoMinutos = tiempoMinutos;
+    }
+    public Set <Pedido> getPedidos(){
+        return pedidos;
+    }
+    public void setPedidos(Set <Pedido> pedidos){
+        this.pedidos = pedidos;
     }
    @Override
     public String toString() {

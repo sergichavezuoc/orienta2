@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name ="model.Pedido" table="pedido">
+        <id name="numPedido" type="long" column="numPedido">
+        </id>
+        <many-to-one name="cliente" class="model.Cliente" column="nif" />
+        <many-to-one name="articulo" class="model.Articulo" column="numArticulo"/>
+        <property name="cantidad" type="int">
+            <column name="cantidad"/>
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" sql-type="timestamp"/>
+        </property>
+    </class>
+</hibernate-mapping>

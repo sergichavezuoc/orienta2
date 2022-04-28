@@ -6,7 +6,9 @@
 package model;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -15,16 +17,16 @@ import java.util.Date;
  * @author sergichavez
  */
 public class Pedido {
-protected int numPedido;
+protected Long numPedido;
 protected Cliente cliente;
 protected Articulo articulo;
 protected int cantidad;
-protected LocalDateTime fecha;
+protected Timestamp fecha;
 
     public Pedido(){
         
     }
-    public Pedido(int numPedido, Cliente cliente, Articulo articulo, int cantidad, LocalDateTime fecha) {
+    public Pedido(Long numPedido, Cliente cliente, Articulo articulo, int cantidad, Timestamp fecha) {
         this.numPedido = numPedido;
         this.cliente = cliente;
         this.articulo = articulo;
@@ -33,11 +35,11 @@ protected LocalDateTime fecha;
         
     }
 
-    public int getNumPedido() {
+    public Long getNumPedido() {
         return numPedido;
     }
 
-    public void setNumPedido(int numPedido) {
+    public void setNumPedido(Long numPedido) {
         this.numPedido = numPedido;
     }
 
@@ -65,14 +67,35 @@ protected LocalDateTime fecha;
         this.cantidad = cantidad;
     }
 
-    public LocalDateTime getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
     
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = LocalDateTime.now();
+    public void setFecha(Timestamp fecha) {
+        this.fecha = fecha;
     }
-
+    /*
+    public Timestamp setFechaSQL(LocalDateTime fecha){
+        this.fecha = fecha;
+        return fecha == null ? null : Timestamp.valueOf(fecha);      
+    }
+    */
+    
+    public boolean equals(Object obj){
+        if(obj==null)return false;
+        if(!this.getClass().equals(obj.getClass())) return false;
+        
+        Pedido obj2 = (Pedido)obj;
+        if(this.numPedido == obj2.getNumPedido()){
+            return true;
+        }
+        return false;
+    }
+    public int hashCode(){
+        int tmp = 0;
+        tmp = (numPedido).hashCode();
+        return tmp;
+    }
     
     
        @Override
@@ -81,6 +104,6 @@ protected LocalDateTime fecha;
         DateTimeFormatter isoFecha =DateTimeFormatter.ISO_LOCAL_DATE;
         DateTimeFormatter isoHora =DateTimeFormatter.ISO_LOCAL_TIME;
 
-        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() +  "\n\tarticulo = " + articulo.getDescripcion() +"\n\tFecha = " + fecha.format(isoFecha) + fecha.format(isoHora) + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() + "%)\n";
+        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() +  "\n\tarticulo = " + articulo.getDescripcion() +"\n\tFecha = "  + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() + "%)\n";
     }
 }

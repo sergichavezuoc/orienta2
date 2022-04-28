@@ -76,37 +76,41 @@ public class ClienteDao implements Dao<Cliente, String> {
 
     @Override
     public boolean save(Cliente t) {
-      session.save(t);
-        return true;
+      boolean exito = false;
+      try{
+          tx=session.getTransaction();
+          tx.begin();
+          if(t.getPremium() ==false){
+               ClienteEstandar clienteE =new ClienteEstandar();
+               clienteE.setDomicilio(t.domicilio);
+               clienteE.setEmail(t.email);
+               clienteE.setNif(t.nif);
+               clienteE.setNombre(t.nombre);
+               clienteE.setPremium(t.premium);
+               session.saveOrUpdate(clienteE);
+               tx.commit();
+               exito = true;
+          }else{
+              ClientePremium clienteP = new ClientePremium();
+               clienteP.setDomicilio(t.domicilio);
+               clienteP.setEmail(t.email);
+               clienteP.setNif(t.nif);
+               clienteP.setNombre(t.nombre);
+               clienteP.setPremium(t.premium);
+               session.saveOrUpdate(clienteP);
+               tx.commit();
+               exito = true;
+          }     
+      }catch(RuntimeException e){
+           throw e;
+      }
+      return exito;
     }
-
+    
     @Override
     public boolean delete(String t) {
         return false;
     } 
-    
-    /*private ClienteEstandar buildClienteE(ResultSet result) throws SQLException {
-        
-        ClienteEstandar clienteE = new ClienteEstandar();
-        clienteE.setNombre(result.getString("nombre"));
-        clienteE.setDomicilio(result.getString("domicilio"));
-        clienteE.setNif(result.getString("nif"));
-        clienteE.setEmail(result.getString("email"));
-        clienteE.setPremium(result.getBoolean("premium"));
-        
-        return clienteE;
-    }
-    private ClientePremium buildClienteP(ResultSet result) throws SQLException {
-        
-        ClientePremium clienteP = new ClientePremium();
-        clienteP.setNombre(result.getString("nombre"));
-        clienteP.setDomicilio(result.getString("domicilio"));
-        clienteP.setNif(result.getString("nif"));
-        clienteP.setEmail(result.getString("email"));
-        clienteP.setPremium(result.getBoolean("premium"));
-        
-        return clienteP;
-    }
-    */
+   
 }
 

@@ -6,6 +6,9 @@
 package model;
 import model.ClienteDao;
 import java.sql.Connection;
+import java.util.Set;
+import javax.persistence.Column;
+import org.hibernate.annotations.Type;
 /**
  *
  * @author sergichavez
@@ -16,6 +19,7 @@ public abstract class Cliente {
  protected String nif;
  protected String email;
  protected boolean premium;
+ protected Set <Pedido> pedidos;
      
     public Cliente(){
         
@@ -68,7 +72,12 @@ public abstract class Cliente {
     public void setPremium(boolean premium){
         this.premium = premium;
     }
-    
+    public Set getPedidos(){
+        return pedidos;
+    }
+    public void setPedidos(Set pedido){
+        this.pedidos= pedidos;
+    }
  public abstract String tipoCliente();
  
  public abstract float calcAnual();

@@ -7,13 +7,17 @@ package view;
 
 import controlador.Controlador;
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Articulo;
 import model.Cliente;
+import model.ElementNotFound;
 import static view.VistaStore.obtenInt;
+import static view.VistaStore.obtenLong;
 import static view.VistaStore.obtenString;
 
 /**
@@ -21,9 +25,10 @@ import static view.VistaStore.obtenString;
  * @author sergichavez
  */
 public class VistaNuevoPedido {
-       public static List imprimeAgregarPedido(){
+       public static List imprimeAgregarPedido() throws ElementNotFound{
        
-       int numPedido, cantidad;
+       int  cantidad;
+       Long numPedido;
        Cliente cliente;
        String nif, nombreArticulo;
        Articulo articulo;
@@ -35,7 +40,8 @@ public class VistaNuevoPedido {
        System.out.println("  FORMULARIO NUEVO PEDIDO  ");
        System.out.println("###########################");       
        System.out.println("Introduce el un nº entero correspondiente al codigo del pedido");
-       numPedido = obtenInt();
+       numPedido = obtenLong();
+       System.out.println(numPedido);
        atributos.add(numPedido);
        System.out.println("Cliente premium si o no");
        String respuesta=obtenString();
@@ -53,7 +59,7 @@ public class VistaNuevoPedido {
        System.out.println("Introduce cantidad");
        cantidad = obtenInt();
        atributos.add(cantidad);
-       LocalDateTime date = LocalDateTime.now();
+       Timestamp date = Timestamp.valueOf(LocalDateTime.now());
        atributos.add(date);
        System.out.println("fecha fijada");
        return atributos;    

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,15 +74,15 @@ public class Controlador {
     
     //GESTION PEDIDOS
     
-    public void gestionPedidos(){
+    public void gestionPedidos() throws ElementFound, ElementNotFound{
         VistaMenuPedido.imprimeMenuPedidos();
     }
     
-    public void agregarPedido() {
+    public void agregarPedido() throws ElementFound, ElementNotFound {
         boolean exito;    
         List<Object> atributos = new ArrayList<Object>();
         atributos = VistaNuevoPedido.imprimeAgregarPedido();
-        if(new PedidoDao(connection).save(new Pedido ((Integer)atributos.get(0), (Cliente)atributos.get(1), (Articulo)atributos.get(2), (Integer)atributos.get(3),(LocalDateTime)atributos.get(4)))){
+        if(new PedidoDao(connection).save(new Pedido ((Long)atributos.get(0), (Cliente)atributos.get(1), (Articulo)atributos.get(2), (Integer)atributos.get(3),(Timestamp)atributos.get(4)))){
             exito = true;
             VistaStore.mensajeCreado(exito);
         } 
@@ -93,22 +95,18 @@ public class Controlador {
             lista = new PedidoDao(connection).getAll();
             VistaMuestraPedido.muestraPedidos(lista);    
         } catch (ElementNotFound ex) {
-            VistaStore.mensajeError(ex.getMessage());
+            VistaStore.mensajeError("No se ha podido listar los pedidos");
         }
     }
         
-    public void eliminarPedido() {
+    public void eliminarPedido() throws ElementNotFound {
         Long pedido = VistaEliminarPedido.solicitarPedido();
         boolean exito =false;
-        try {
-            exito = new PedidoDao(connection).delete(pedido);
-            if (exito==true){
-                VistaStore.mensajeEliminado();
-            }else{
-                VistaStore.mensajeError("No se ha podido eliminar");
-            }
-        } catch (ElementNotFound e) {
-            VistaStore.mensajeError(e.getMessage());
+        exito = new PedidoDao(connection).delete(pedido);
+        if (exito==true){
+            VistaStore.mensajeEliminado();
+        }else{
+            VistaStore.mensajeError("No se ha podido eliminar");
         }
     }     
      
@@ -147,7 +145,7 @@ public class Controlador {
         VistaMuestraCliente.muestraClientesE(lista);
     }
 
-    public static Cliente recuperarCliente(String email){
+    public static Cliente recuperarCliente(String email) throws ElementNotFound{
         Cliente cliente= new ClienteDao(connection).get(email);
         return cliente;
     }

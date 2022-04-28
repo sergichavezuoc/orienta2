@@ -7,6 +7,8 @@ package view;
 
 import controlador.Controlador;
 import java.util.Scanner;
+import model.ElementFound;
+import model.ElementNotFound;
 
 /**
  *
@@ -14,7 +16,7 @@ import java.util.Scanner;
  */
 public class VistaMenuPedido {
    //MENU PEDIDOS
-     public static void imprimeMenuPedidos(){
+     public static void imprimeMenuPedidos() throws ElementFound, ElementNotFound{
        Controlador controlador = new Controlador();
        Scanner teclado2 = new Scanner(System.in); 
        boolean salir = false;
