@@ -104,6 +104,6 @@ protected Timestamp fecha;
         DateTimeFormatter isoFecha =DateTimeFormatter.ISO_LOCAL_DATE;
         DateTimeFormatter isoHora =DateTimeFormatter.ISO_LOCAL_TIME;
 
-        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() +  "\n\tarticulo = " + articulo.getDescripcion() +"\n\tFecha = "  + "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() + "%)\n";
+        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() +  "\n\tarticulo = " + articulo.getDescripcion() +"\n\tFecha = "  +fecha+ "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() + "%)\n";
     }
 }

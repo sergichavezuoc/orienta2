@@ -127,13 +127,18 @@ public class PedidoDao implements Dao<Pedido, Long> {
         System.out.println((-diff));
        if(tmptoLong > (-diff)){ 
            System.out.println(numPedido);
-           Query query =session.createQuery("Delete FROM Pedido WHERE numPedido = :numPedido").setParameter("numPedido", numPedido);
-           int result =query.executeUpdate(); 
-           if(result >0){
+           tx= session.getTransaction();
+           tx.begin();
+           session.delete(pedido); 
+           tx.commit();
+           session.close();
+           //Query query =session.createQuery("Delete FROM Pedido WHERE numPedido = :numPedido").setParameter("numPedido", numPedido);
+           //int result =query.executeUpdate(); 
+           //if(result >0){
                exito = true;
-           }else{
-               exito =false;
-           }
+           //}else{
+             //  exito =false;
+           //}
         }     
        
       return exito;
