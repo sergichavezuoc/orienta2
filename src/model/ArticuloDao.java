@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.MappingException;
 import org.hibernate.Query;
@@ -16,9 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -39,8 +35,7 @@ public class ArticuloDao implements Dao<Articulo, Long> {
     
     @Override
     public Articulo get(Long id) throws ElementNotFound {
-   org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");
-    java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.WARNING); //or whatever level you need
+ //or whatever level you need
         Articulo articulo =null;
         try {
             Query query = session.createQuery("from Articulo WHERE numArticulo= :id");
