@@ -4,28 +4,31 @@
  * and open the template in the editor.
  */
 package model;
+
 import model.ClienteDao;
 import java.sql.Connection;
 import java.util.Set;
 import javax.persistence.Column;
 import org.hibernate.annotations.Type;
+
 /**
  *
  * @author sergichavez
  */
 public abstract class Cliente {
- protected String nombre;
- protected String domicilio;
- protected String nif;
- protected String email;
- protected boolean premium;
- protected Set <Pedido> pedidos;
-     
-    public Cliente(){
-        
+
+    protected String nombre;
+    protected String domicilio;
+    protected String nif;
+    protected String email;
+    protected boolean premium;
+    protected Set<Pedido> pedidos;
+
+    public Cliente() {
+
     }
-    
-    public Cliente(String nombre, String domicilio, String nif, String email,boolean premium) {
+
+    public Cliente(String nombre, String domicilio, String nif, String email, boolean premium) {
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.nif = nif;
@@ -52,7 +55,7 @@ public abstract class Cliente {
     public String getNif() {
         return nif;
     }
-    
+
     public void setNif(String nif) {
         this.nif = nif;
     }
@@ -64,23 +67,26 @@ public abstract class Cliente {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    public boolean getPremium(){
+
+    public boolean getPremium() {
         return premium;
     }
-    
-    public void setPremium(boolean premium){
+
+    public void setPremium(boolean premium) {
         this.premium = premium;
     }
-    public Set getPedidos(){
+
+    public Set getPedidos() {
         return pedidos;
     }
-    public void setPedidos(Set pedido){
-        this.pedidos= pedidos;
+
+    public void setPedidos(Set pedido) {
+        this.pedidos = pedidos;
     }
- public abstract String tipoCliente();
- 
- public abstract float calcAnual();
- 
- public abstract float descuentoEnv();
+
+    public abstract String tipoCliente();
+
+    public abstract float calcAnual();
+
+    public abstract float descuentoEnv();
 }

@@ -13,5 +13,5 @@ public class ElementFound extends Exception {
     public ElementFound(String s) {
         super(s);
     }
-    
+
 }

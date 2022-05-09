@@ -13,19 +13,19 @@ import java.util.Set;
  *
  * @author sergichavez
  */
-public class Articulo implements Serializable{
-  protected Long numArticulo;
-  protected String descripcion;
-  protected int precio;
-  protected int gastos;
-  protected int tiempoMinutos; 
-  protected Set <Pedido> pedidos;
-  
+public class Articulo implements Serializable {
 
-    public Articulo(){
-        
+    protected Long numArticulo;
+    protected String descripcion;
+    protected int precio;
+    protected int gastos;
+    protected int tiempoMinutos;
+    protected Set<Pedido> pedidos;
+
+    public Articulo() {
+
     }
-  
+
     public Articulo(Long numArticulo, String descripcion, int precio, int gastos, int tiempoMinutos) {
         this.numArticulo = numArticulo;
         this.descripcion = descripcion;
@@ -73,13 +73,16 @@ public class Articulo implements Serializable{
     public void setTiempoMinutos(int tiempoMinutos) {
         this.tiempoMinutos = tiempoMinutos;
     }
-    public Set <Pedido> getPedidos(){
+
+    public Set<Pedido> getPedidos() {
         return pedidos;
     }
-    public void setPedidos(Set <Pedido> pedidos){
+
+    public void setPedidos(Set<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
-   @Override
+
+    @Override
     public String toString() {
         return "Articulo:\n\t" + "NumArticulo = " + numArticulo + "\n\tdescripcion = " + descripcion + "\n\tprecio = " + precio + "\n\tTiempoMinutos = " + tiempoMinutos + "\n\n";
     }

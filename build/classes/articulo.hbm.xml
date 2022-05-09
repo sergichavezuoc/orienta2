@@ -8,9 +8,17 @@
             <key column="numArticulo"/>   
             <one-to-many class="model.Pedido" />
         </set>
-        <property name="descripcion" type="string"><column name="descripcion" length="40"/></property>
-        <property name="precio" type="integer"><column name="precio"/></property>
-        <property name="gastos" type="integer"><column name="gastos"/></property>
-        <property name="tiempoMinutos" type="integer"><column name="tiempoMinutos"/></property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="40"/>
+        </property>
+        <property name="precio" type="integer">
+            <column name="precio"/>
+        </property>
+        <property name="gastos" type="integer">
+            <column name="gastos"/>
+        </property>
+        <property name="tiempoMinutos" type="integer">
+            <column name="tiempoMinutos"/>
+        </property>
     </class>
 </hibernate-mapping>

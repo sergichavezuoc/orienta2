@@ -11,10 +11,18 @@
             <key column="nif"/>   
             <one-to-many class="model.Pedido" />
         </set>
-        <property name="nombre" type="string"><column name="nombre" length="60"/></property>
-        <property name="domicilio" type="string"><column name="domicilio"/></property>
-        <property name="email" type="string"><column name="email"/></property>
-        <property name="premium" type="org.hibernate.type.NumericBooleanType" insert="false" update="false"><column name="premium" sql-type="tinyint"/></property>  
+        <property name="nombre" type="string">
+            <column name="nombre" length="60"/>
+        </property>
+        <property name="domicilio" type="string">
+            <column name="domicilio"/>
+        </property>
+        <property name="email" type="string">
+            <column name="email"/>
+        </property>
+        <property name="premium" type="org.hibernate.type.NumericBooleanType" insert="false" update="false">
+            <column name="premium" sql-type="tinyint"/>
+        </property>  
   
         <subclass name="model.ClienteEstandar" discriminator-value="0" extends="modelo.Cliente"></subclass>  
         <subclass name="model.ClientePremium" discriminator-value="1" extends="modelo.Cliente"></subclass>

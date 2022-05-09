@@ -12,27 +12,30 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
 /**
  *
  * @author sergichavez
  */
 public class Pedido {
-protected Long numPedido;
-protected Cliente cliente;
-protected Articulo articulo;
-protected int cantidad;
-protected Timestamp fecha;
 
-    public Pedido(){
-        
+    protected Long numPedido;
+    public Cliente cliente;
+    public Articulo articulo;
+    protected int cantidad;
+    protected Timestamp fecha;
+
+    public Pedido() {
+
     }
+
     public Pedido(Long numPedido, Cliente cliente, Articulo articulo, int cantidad, Timestamp fecha) {
         this.numPedido = numPedido;
         this.cliente = cliente;
         this.articulo = articulo;
         this.cantidad = cantidad;
         this.fecha = fecha;
-        
+
     }
 
     public Long getNumPedido() {
@@ -70,40 +73,45 @@ protected Timestamp fecha;
     public Timestamp getFecha() {
         return fecha;
     }
-    
+
     public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
+
     /*
     public Timestamp setFechaSQL(LocalDateTime fecha){
         this.fecha = fecha;
         return fecha == null ? null : Timestamp.valueOf(fecha);      
     }
-    */
-    
-    public boolean equals(Object obj){
-        if(obj==null)return false;
-        if(!this.getClass().equals(obj.getClass())) return false;
-        
-        Pedido obj2 = (Pedido)obj;
-        if(this.numPedido == obj2.getNumPedido()){
+     */
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!this.getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        Pedido obj2 = (Pedido) obj;
+        if (this.numPedido == obj2.getNumPedido()) {
             return true;
         }
         return false;
     }
-    public int hashCode(){
+
+    public int hashCode() {
         int tmp = 0;
         tmp = (numPedido).hashCode();
         return tmp;
     }
-    
-    
-       @Override
+
+    @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        DateTimeFormatter isoFecha =DateTimeFormatter.ISO_LOCAL_DATE;
-        DateTimeFormatter isoHora =DateTimeFormatter.ISO_LOCAL_TIME;
+        DateTimeFormatter isoFecha = DateTimeFormatter.ISO_LOCAL_DATE;
+        DateTimeFormatter isoHora = DateTimeFormatter.ISO_LOCAL_TIME;
 
-        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() +  "\n\tarticulo = " + articulo.getDescripcion() +"\n\tFecha = "  +fecha+ "\n\tGastos de envio = "+(articulo.getGastos()-(articulo.getGastos()*cliente.descuentoEnv()/100))+" (aplicado descuento "+cliente.descuentoEnv() + "%)\n";
+        return "Pedido:\n\t" + "NumPedido = " + numPedido + "\n\tcliente = " + cliente.getNombre() + "\n\tarticulo = " + articulo.getDescripcion() + "\n\tFecha = " + fecha + "\n\tGastos de envio = " + (articulo.getGastos() - (articulo.getGastos() * cliente.descuentoEnv() / 100)) + " (aplicado descuento " + cliente.descuentoEnv() + "%)\n";
     }
 }

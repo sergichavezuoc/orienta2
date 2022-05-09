@@ -27,53 +27,53 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-
-
 /**
  *
  * @author maria
  */
 public class PedidoDao implements Dao<Pedido, Long> {
+
     Connection conn;
     DefaultTableModel DT;
     Configuration configuration = new Configuration().configure();
     SessionFactory sessionFactory = configuration.buildSessionFactory();
     Session session = sessionFactory.openSession();
     Transaction tx = session.getTransaction();
-    
+
     public PedidoDao(Connection conn) {
         this.conn = conn;
     }
-    
+
     public Pedido get(String id) {
         return null;
     }
+
     @Override
     public Pedido get(Long id) throws ElementNotFound {
         Pedido pedido = null;
-        try{
-            Query query =session.createQuery("from Pedido WHERE numPedido= :id");
+        try {
+            Query query = session.createQuery("from Pedido WHERE numPedido= :id");
             query.setParameter("id", id);
-            pedido =(Pedido)query.uniqueResult();
-        }catch(Exception e){
+            pedido = (Pedido) query.uniqueResult();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(pedido == null){
+        if (pedido == null) {
             throw new ElementNotFound("No se ha podido encontrar el pedido introducido");
         }
-        return pedido;      
+        return pedido;
     }
 
     @Override
     public List<Pedido> getAll() throws ElementNotFound {
-      ArrayList <Pedido> pedidos = new ArrayList<>();
-      try{
-          Query query =session.createQuery("from Pedido");
-          List<Pedido> empList =query.list();
-          for (Pedido pedido:empList){
-              pedidos.add(pedido);
-          }        
-      }catch(Exception e){
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        try {
+            Query query = session.createQuery("from Pedido");
+            List<Pedido> empList = query.list();
+            for (Pedido pedido : empList) {
+                pedidos.add(pedido);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (pedidos.size() == 0) {
@@ -82,66 +82,64 @@ public class PedidoDao implements Dao<Pedido, Long> {
         return pedidos;
     }
 
-    
-    
     @Override
     public boolean save(Pedido t) {
-       boolean exito = false;
-       System.out.println(t.fecha);
-       System.out.println(t.numPedido);
-       try{
-           tx= session.getTransaction();
-           tx.begin();
-           Pedido pedido = new Pedido();
-           pedido.setNumPedido(t.numPedido);
-           pedido.setArticulo(t.articulo);
-           pedido.setCliente(t.cliente);
-           pedido.setFecha(t.fecha);
-           pedido.setCantidad(t.cantidad);
-           session.save(pedido);
-           System.out.println("inicio");
-           tx.commit();
-           exito =true;
+        boolean exito = false;
+        System.out.println(t.fecha);
+        System.out.println(t.numPedido);
+        try {
+            tx = session.getTransaction();
+            tx.begin();
+            Pedido pedido = new Pedido();
+            pedido.setNumPedido(t.numPedido);
+            pedido.setArticulo(t.articulo);
+            pedido.setCliente(t.cliente);
+            pedido.setFecha(t.fecha);
+            pedido.setCantidad(t.cantidad);
+            session.save(pedido);
+            System.out.println("inicio");
+            tx.commit();
+            exito = true;
             System.out.println("medio");
-       }catch(RuntimeException e){
-           throw e;
-       }
-       System.out.println("final");
-       return exito;
+        } catch (RuntimeException e) {
+            throw e;
+        }
+        System.out.println("final");
+        return exito;
     }
 
     @Override
     public boolean delete(Long numPedido) throws ElementNotFound {
-       boolean exito=false;
-       Pedido pedido= get(numPedido);
-       
-       LocalDateTime tmpPedido = pedido.getFecha().toLocalDateTime();
-       LocalDateTime tmpNow= Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime();
-       Long diff = ChronoUnit.MINUTES.between(tmpNow, tmpPedido); 
-       System.out.println(diff);
-       Articulo articulo = pedido.getArticulo();
-       int tmp = articulo.getTiempoMinutos();
-       Long tmptoLong =0l;
-       tmptoLong =tmptoLong.valueOf(tmp);
-       System.out.println(tmptoLong);
+        boolean exito = false;
+        Pedido pedido = get(numPedido);
+
+        LocalDateTime tmpPedido = pedido.getFecha().toLocalDateTime();
+        LocalDateTime tmpNow = Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime();
+        Long diff = ChronoUnit.MINUTES.between(tmpNow, tmpPedido);
+        System.out.println(diff);
+        Articulo articulo = pedido.getArticulo();
+        int tmp = articulo.getTiempoMinutos();
+        Long tmptoLong = 0l;
+        tmptoLong = tmptoLong.valueOf(tmp);
+        System.out.println(tmptoLong);
         System.out.println((-diff));
-       if(tmptoLong > (-diff)){ 
-           System.out.println(numPedido);
-           tx= session.getTransaction();
-           tx.begin();
-           session.delete(pedido); 
-           tx.commit();
-           session.close();
-           //Query query =session.createQuery("Delete FROM Pedido WHERE numPedido = :numPedido").setParameter("numPedido", numPedido);
-           //int result =query.executeUpdate(); 
-           //if(result >0){
-               exito = true;
-           //}else{
-             //  exito =false;
-           //}
-        }     
-       
-      return exito;
-    }   
-    
+        if (tmptoLong > (-diff)) {
+            System.out.println(numPedido);
+            tx = session.getTransaction();
+            tx.begin();
+            session.delete(pedido);
+            tx.commit();
+            session.close();
+            //Query query =session.createQuery("Delete FROM Pedido WHERE numPedido = :numPedido").setParameter("numPedido", numPedido);
+            //int result =query.executeUpdate(); 
+            //if(result >0){
+            exito = true;
+            //}else{
+            //  exito =false;
+            //}
+        }
+
+        return exito;
+    }
+
 }
