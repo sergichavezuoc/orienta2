@@ -93,6 +93,11 @@ public class VistaNuevoCliente {
                     actiontarget.setText("Ha de introducir el Email");
                     return;
                 }
+                if(domicilioTextField.getText().equals("")){
+                    actiontarget.setText("Ha de introducir el domicilio");
+                    return;
+                }
+                
                 List<Object> atributos = new ArrayList<Object>();
                 boolean premium = true;
                 if (premiumComboBox.getValue().equals("no")) {

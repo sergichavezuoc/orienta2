@@ -79,6 +79,21 @@ public class VistaEliminarPedido {
                     vBox.setStyle("-fx-base: honeydew;-fx-font-color: black;");
                     primaryStage.getScene().setRoot(vBox);
                 };
+                if (borrado == false) {
+                    GridPane grid = new GridPane();
+                    grid.setAlignment(Pos.CENTER);
+                    grid.setHgap(10);
+                    grid.setVgap(10);
+                    grid.setStyle("-fx-font-size: 16px;-fx-text-fill: #000;");
+                    Text scenetitle = new Text("Pedido borrado");
+                    scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 24));
+                    grid.add(scenetitle, 0, 0, 2, 1);
+                    Label nombre = new Label("El pedido no se he podido eliminar. Se ha superado el tiempo de preparacion");
+                    grid.add(nombre, 0, 1);
+                    VBox vBox = new VBox(menuBar, grid);
+                    vBox.setStyle("-fx-base: honeydew;-fx-font-color: black;");
+                    primaryStage.getScene().setRoot(vBox);
+                };
                 //actiontarget.setText(nifTextField.getText());
             }
         });
